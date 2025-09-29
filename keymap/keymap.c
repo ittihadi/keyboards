@@ -267,6 +267,8 @@ bool caps_word_press_user(uint16_t keycode) {
     case KC_1 ... KC_0:
     case KC_COMM: // Add more keys that don't disable CAPSWORD and don't autocap
     case KC_DOT:
+    case KC_QUOT:
+    case KC_DQUO:
     case KC_UNDS:
     case KC_MINS:
     case KC_BSPC:
