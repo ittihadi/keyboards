@@ -34,6 +34,8 @@
 //            remove super key from thumb cluster (at least on base layer)
 // 2025-09-29 Remove default QWERTY layer, gaming layer will suffice in typing
 //            QWERTY
+// 2025-09-29 Add combos for tab and backspace on base layer, exact
+//            configuration is being considered
 
 // TODO: Make one shot mod layers not consume modifier when its keys are
 //       pressed, also make the symbols and numbers not follow shift
@@ -48,6 +50,13 @@ enum layers {
     _OTHER,
 };
 
+enum combos {
+    UY_BACKSPACE,
+    ZD_TAB,
+    COMBO_LENGTH,
+};
+uint16_t COMBO_LEN = COMBO_LENGTH;
+
 enum keycodes {
     OS_SHFT = SAFE_RANGE,
     OS_CTRL,
@@ -61,8 +70,19 @@ enum keycodes {
 #define LA_SYM MO(_SYM)
 #define LA_FUN MO(_FUN)
 
-// clang-format off
+const uint16_t PROGMEM uy_backspace[] = {KC_U, KC_Y, COMBO_END};
+const uint16_t PROGMEM zd_tab[] = {KC_Z, KC_D, COMBO_END};
 
+// clang-format off
+// Apparently the keymap won't compile if this wasn't here after enabling
+// the combo feature
+combo_t key_combos[] = {
+    [UY_BACKSPACE] = COMBO(uy_backspace, KC_BSPC),
+    [ZD_TAB]       = COMBO(zd_tab, KC_TAB),
+};
+// clang-format on
+
+// clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      /*
       * ┌───┬───┬───┬───┬───┬───┐       ┌───┬───┬───┬───┬───┬───┐
