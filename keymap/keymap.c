@@ -53,6 +53,7 @@ enum layers {
 enum combos {
     UY_BACKSPACE,
     ZD_TAB,
+    GM_CAPSWORD,
     COMBO_LENGTH,
 };
 uint16_t COMBO_LEN = COMBO_LENGTH;
@@ -72,6 +73,7 @@ enum keycodes {
 
 const uint16_t PROGMEM uy_backspace[] = {KC_U, KC_Y, COMBO_END};
 const uint16_t PROGMEM zd_tab[] = {KC_Z, KC_D, COMBO_END};
+const uint16_t PROGMEM gm_capsword[] = {KC_G, KC_M, COMBO_END};
 
 // clang-format off
 // Apparently the keymap won't compile if this wasn't here after enabling
@@ -79,6 +81,7 @@ const uint16_t PROGMEM zd_tab[] = {KC_Z, KC_D, COMBO_END};
 combo_t key_combos[] = {
     [UY_BACKSPACE] = COMBO(uy_backspace, KC_BSPC),
     [ZD_TAB]       = COMBO(zd_tab, KC_TAB),
+    [GM_CAPSWORD]  = COMBO(gm_capsword, CW_TOGG),
 };
 // clang-format on
 
@@ -106,7 +109,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
      /* 
       * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
-      * │  Tab  │   6   │   4   │   0   │   2   │   8   │       │   9   │   3   │   1   │   5   │   7   │ R Alt │
+      * │  Tab  │       │       │       │       │       │       │       │       │       │       │       │ R Alt │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
       * │       │  GUI  │ OSAlt │ OSSft │ OSCtl │       │       │   ←   │   ↓   │   ↑   │   → 	│       │ Pscrn │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
@@ -119,7 +122,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       *                                           └───────┘   └───────┘
       */
     [_NUMNAV] = LAYOUT_split_3x6_3(
-        KC_TAB,  KC_6,    KC_4,    KC_0,    KC_2,    KC_8,                                KC_9,    KC_3,    KC_1,    KC_5,    KC_7,    KC_RALT,
+        KC_TAB,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_RALT,
         XXXXXXX, KC_LGUI, OS_ALT,  OS_SHFT, OS_CTRL, XXXXXXX,                             KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,XXXXXXX, KC_PSCR,
         XXXXXXX, C(KC_Z), C(KC_X), C(KC_C), XXXXXXX, C(KC_V),                             KC_HOME, KC_PGDN, KC_PGUP, KC_END,  XXXXXXX, KC_ESC,
                                             XXXXXXX, _______,  KC_SPC,           KC_ENT,   LA_FUN, KC_BSPC
@@ -148,9 +151,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
       * │       │  F6   │  F4   │  F10  │  F2   │  F8   │       │  F9   │  F3   │  F1   │  F5   │  F7   │       │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
-      * │       │       │ OSAlt │ CapWr │ OSCtl │  F12  │       │  F11  │ OSCtl │ CapWr │ OSAlt │       │       │
+      * │       │   6   │   4   │   0   │   2   │  F12  │       │  F11  │   3   │   1   │   5   │   7   │       │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
-      * │       │       │       │       │       │ Other │       │       │       │       │       │       │       │
+      * │       │       │       │       │   8   │ Other │       │       │   9   │       │       │       │       │
       * └───────┴───────┴───────┴───────┴───────┴───────┘       └───────┴───────┴───────┴───────┴───────┴───────┘
       *                           ┌───────┐                                   ┌───────┐
       *                           │  GUI  ├───────┐                   ┌───────┤       │
@@ -160,8 +163,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       */
     [_FUN] = LAYOUT_split_3x6_3(
         XXXXXXX,   KC_F6,   KC_F4,  KC_F10,   KC_F2,   KC_F8,                              KC_F9,   KC_F3,   KC_F1,   KC_F5,   KC_F7, XXXXXXX,
-        XXXXXXX, XXXXXXX,  OS_ALT, CW_TOGG, OS_CTRL,  KC_F12,                             KC_F11, OS_CTRL, CW_TOGG,  OS_ALT, XXXXXXX, XXXXXXX,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, MO(_OTHER),                         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX,    KC_6,    KC_4,    KC_0,    KC_2,  KC_F12,                             KC_F11,    KC_3,    KC_1,    KC_5,    KC_7, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    KC_8, MO(_OTHER),                         XXXXXXX,    KC_9, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                                             KC_LGUI, _______,  KC_SPC,           KC_ENT, _______, XXXXXXX
     ),
      /* GAME
