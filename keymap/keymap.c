@@ -44,7 +44,7 @@ enum layers {
     _COLEMAKDH = 0,
     _GAME,
     _CAPSWORD,
-    _NUMNAV,
+    _NAV,
     _SYM,
     _FUN,
     _OTHER,
@@ -67,7 +67,7 @@ enum keycodes {
     CW_NCSP, // Capsword non-cancelling space
 };
 
-#define LA_NUM MO(_NUMNAV)
+#define LA_NAV MO(_NAV)
 #define LA_SYM MO(_SYM)
 #define LA_FUN MO(_FUN)
 
@@ -97,7 +97,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       * └───┴───┴───┴───┴───┴───┘       └───┴───┴───┴───┴───┴───┘
       *               ┌───┐                   ┌───┐
       *               │GUI├───┐           ┌───┤Bsp│
-      *               └───┤NUM├───┐   ┌───┤SYM├───┘
+      *               └───┤NAV├───┐   ┌───┤SYM├───┘
       *                   └───┤Spc│   │Ent├───┘
       *                       └───┘   └───┘
       */
@@ -105,13 +105,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_RALT,
         KC_LCTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                                KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
         KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                                KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_ESC,
-                                            KC_LGUI,  LA_NUM,  KC_SPC,           KC_ENT,  LA_SYM,  KC_BSPC
+                                            KC_LGUI,  LA_NAV,  KC_SPC,           KC_ENT,  LA_SYM,  KC_BSPC
     ),
      /* 
       * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
-      * │  Tab  │       │       │       │       │       │       │       │       │       │       │       │ R Alt │
+      * │       │  Tab  │       │       │       │       │       │       │       │       │       │  Del  │ R Alt │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
-      * │       │  GUI  │ OSAlt │ OSSft │ OSCtl │       │       │   ←   │   ↓   │   ↑   │   → 	│       │ Pscrn │
+      * │       │  GUI  │ OSAlt │ OSSft │ OSCtl │       │       │   ←   │   ↓   │   ↑   │   → 	│  Bsp  │ Pscrn │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
       * │       │ Ctl Z │ Ctl X │ Ctl C │       │ Ctl V │       │ Home  │ PgDwn │  PgUp │  End  │       │  Esc  │
       * └───────┴───────┴───────┴───────┴───────┴───────┘       └───────┴───────┴───────┴───────┴───────┴───────┘
@@ -121,9 +121,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       *                                   └───────┤  Spc  │   │  Ent  ├───────┘
       *                                           └───────┘   └───────┘
       */
-    [_NUMNAV] = LAYOUT_split_3x6_3(
-        KC_TAB,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_RALT,
-        XXXXXXX, KC_LGUI, OS_ALT,  OS_SHFT, OS_CTRL, XXXXXXX,                             KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,XXXXXXX, KC_PSCR,
+    [_NAV] = LAYOUT_split_3x6_3(
+        XXXXXXX,  KC_TAB, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_DEL, KC_RALT,
+        XXXXXXX, KC_LGUI, OS_ALT,  OS_SHFT, OS_CTRL, XXXXXXX,                             KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,KC_BSPC, KC_PSCR,
         XXXXXXX, C(KC_Z), C(KC_X), C(KC_C), XXXXXXX, C(KC_V),                             KC_HOME, KC_PGDN, KC_PGUP, KC_END,  XXXXXXX, KC_ESC,
                                             XXXXXXX, _______,  KC_SPC,           KC_ENT,   LA_FUN, KC_BSPC
     ),
@@ -233,7 +233,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 bool is_oneshot_cancel_key(uint16_t keycode) {
     switch (keycode) {
     case LA_SYM:
-    case LA_NUM:
+    case LA_NAV:
         return true;
     default:
         return false;
@@ -243,7 +243,7 @@ bool is_oneshot_cancel_key(uint16_t keycode) {
 bool is_oneshot_ignored_key(uint16_t keycode) {
     switch (keycode) {
     case LA_SYM:
-    case LA_NUM:
+    case LA_NAV:
     case OS_SHFT:
     case OS_CTRL:
     case OS_ALT:
