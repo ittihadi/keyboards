@@ -16,7 +16,6 @@
 enum layers {
     _COLEMAKDH = 0,
     _GAME,
-    _QWERTY,
     _CAPSWORD,
     _NUMNAV,
     _SYM,
@@ -55,6 +54,8 @@ enum keycodes {
 // 2025-09-27 Add Ctrl Z X C V to nav layer
 // 2025-09-29 Change OSM super key on numnav layer to normal super key and
 //            remove super key from thumb cluster (at least on base layer)
+// 2025-09-29 Remove default QWERTY layer, gaming layer will suffice in typing
+//            QWERTY
 
 // TODO: Make one shot mod layers not consume modifier when its keys are pressed,
 //       also make the symbols and numbers not follow shift
@@ -77,26 +78,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_RALT,
         KC_LCTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                                KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
         KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                                KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_ESC,
-                                            KC_LGUI,  LA_NUM,  KC_SPC,           KC_ENT,  LA_SYM,  KC_BSPC
-    ),
-     /*
-      * ┌───┬───┬───┬───┬───┬───┐       ┌───┬───┬───┬───┬───┬───┐
-      * │Tab│ Q │ W │ E │ R │ T │       │ Y │ U │ I │ O │ P │Alt│
-      * ├───┼───┼───┼───┼───┼───┤       ├───┼───┼───┼───┼───┼───┤
-      * │Ctl│ A │ S │ D │ F │ G │       │ H │ J │ K │ L │ ; │ ' │
-      * ├───┼───┼───┼───┼───┼───┤       ├───┼───┼───┼───┼───┼───┤
-      * │Sft│ Z │ X │ C │ V │ B │       │ N │ M │ , │ . │ / │Esc│
-      * └───┴───┴───┴───┴───┴───┘       └───┴───┴───┴───┴───┴───┘
-      *               ┌───┐                   ┌───┐
-      *               │GUI├───┐           ┌───┤Bsp│
-      *               └───┤NUM├───┐   ┌───┤SYM├───┘
-      *                   └───┤Spc│   │Ent├───┘
-      *                       └───┘   └───┘
-      */
-    [_QWERTY] = LAYOUT_split_3x6_3(
-        KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                                KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_RALT,
-        KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ESC,
                                             KC_LGUI,  LA_NUM,  KC_SPC,           KC_ENT,  LA_SYM,  KC_BSPC
     ),
      /* 
@@ -181,7 +162,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
      /*
       * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
-      * │ BOOT  │       │       │       │       │ GAMIN │       │ QWERT │ COLEM │       │       │       │       │
+      * │ BOOT  │       │       │       │       │ GAMIN │       │       │ COLEM │       │       │       │       │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
       * │ Togg  │ HueUp │ SatUp │ ValUp │       │       │       │ VoMut │ VolDn │ VolUp │  Fwd  │       │       │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
@@ -194,10 +175,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       *                                           └───────┘   └───────┘
       */
     [_OTHER] = LAYOUT_split_3x6_3(
-        QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TO(_GAME),                          DF(_QWERTY),DF(_COLEMAKDH),XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        RM_TOGG, RM_HUEU, RM_SATU, RM_VALU, XXXXXXX, XXXXXXX,                            KC_MUTE,    KC_VOLD,       KC_VOLU, KC_MFFD, XXXXXXX, XXXXXXX,
-        RM_NEXT, RM_HUED, RM_SATD, RM_VALD, XXXXXXX, _______,                            XXXXXXX,    KC_BRID,       KC_BRIU, KC_MRWD, XXXXXXX, XXXXXXX,
-                                            XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX, XXXXXXX,    XXXXXXX
+        QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TO(_GAME),                          XXXXXXX, DF(_COLEMAKDH),XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        RM_TOGG, RM_HUEU, RM_SATU, RM_VALU, XXXXXXX, XXXXXXX,                            KC_MUTE, KC_VOLD,       KC_VOLU, KC_MFFD, XXXXXXX, XXXXXXX,
+        RM_NEXT, RM_HUED, RM_SATD, RM_VALD, XXXXXXX, _______,                            XXXXXXX, KC_BRID,       KC_BRIU, KC_MRWD, XXXXXXX, XXXXXXX,
+                                            XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX, XXXXXXX, XXXXXXX
     ),
      /*
       * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
