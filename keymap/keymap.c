@@ -205,26 +205,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 bool is_oneshot_cancel_key(uint16_t keycode) {
     switch (keycode) {
-        case LA_SYM:
-        case LA_NUM:
-            return true;
-        default:
-            return false;
+    case LA_SYM:
+    case LA_NUM:
+        return true;
+    default:
+        return false;
     }
 }
 
 bool is_oneshot_ignored_key(uint16_t keycode) {
     switch (keycode) {
-        case LA_SYM:
-        case LA_NUM:
-        case OS_SHFT:
-        case OS_CTRL:
-        case OS_ALT:
-        case OS_GUI:
-        case KC_LSFT:
-            return true;
-        default:
-            return false;
+    case LA_SYM:
+    case LA_NUM:
+    case OS_SHFT:
+    case OS_CTRL:
+    case OS_ALT:
+    case OS_GUI:
+    case KC_LSFT:
+        return true;
+    default:
+        return false;
     }
 }
 
@@ -240,11 +240,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     update_oneshot(&os_mod_state, KC_LWIN, OS_GUI, keycode, record);
 
     switch (keycode) {
-        case CW_NCSP:
-            if (record->event.pressed) {
-                send_char(' ');
-            }
-            break;
+    case CW_NCSP:
+        if (record->event.pressed) {
+            send_char(' ');
+        }
+        break;
     }
 
     return true;
@@ -253,65 +253,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 void caps_word_set_user(bool active) {
     if (active) {
         layer_on(_CAPSWORD);
-    }
-    else {
+    } else {
         layer_off(_CAPSWORD);
     }
 }
 
 bool caps_word_press_user(uint16_t keycode) {
     switch (keycode) {
-        case KC_A:
-        case KC_B:
-        case KC_C:
-        case KC_D:
-        case KC_E:
-        case KC_F:
-        case KC_G:
-        case KC_H:
-        case KC_I:
-        case KC_J:
-        case KC_K:
-        case KC_L:
-        case KC_M:
-        case KC_N:
-        case KC_O:
-        case KC_P:
-        case KC_Q:
-        case KC_R:
-        case KC_S:
-        case KC_T:
-        case KC_U:
-        case KC_V:
-        case KC_W:
-        case KC_X:
-        case KC_Y:
-        case KC_Z:
-            add_weak_mods(MOD_BIT_LSHIFT);
-            return true;
+    case KC_A ... KC_Z:
+        add_weak_mods(MOD_BIT_LSHIFT);
+        return true;
 
-        case KC_0:
-        case KC_1:
-        case KC_2:
-        case KC_3:
-        case KC_4:
-        case KC_5:
-        case KC_6:
-        case KC_7:
-        case KC_8:
-        case KC_9:
-        case KC_COMM: // Add more keys that don't disable CAPSWORD and don't autocap -
-        case KC_DOT:
-        case KC_UNDS:
-        case KC_MINS:
-        case KC_BSPC:
-        case KC_DEL:
-        case KC_SLSH:
-        case CW_NCSP:
-            return true;
+    case KC_1 ... KC_0:
+    case KC_COMM: // Add more keys that don't disable CAPSWORD and don't autocap
+    case KC_DOT:
+    case KC_UNDS:
+    case KC_MINS:
+    case KC_BSPC:
+    case KC_DEL:
+    case KC_SLSH:
+    case CW_NCSP:
+        return true;
 
-        default:
-            return false;
+    default:
+        return false;
     }
 }
 
