@@ -24,8 +24,12 @@ void update_oneshot(oneshot_state *state, uint16_t mod, uint16_t trigger,
     } else {
         if (record->event.pressed) {
             if (is_oneshot_cancel_key(keycode) && *state != os_up_unqueued) {
-                *state = os_up_unqueued;
-                unregister_code(mod);
+                if (*state == os_down_unused || *state == os_down_used) {
+                    *state = os_down_used;
+                } else {
+                    *state = os_up_unqueued;
+                    unregister_code(mod);
+                }
             }
             if (!is_oneshot_ignored_key(keycode)) {
                 switch (*state) {

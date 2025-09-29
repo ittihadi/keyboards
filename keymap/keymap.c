@@ -27,9 +27,11 @@
 //            QWERTY
 // 2025-09-29 Add combos for tab and backspace on base layer, exact
 //            configuration is being considered
+// 2025-09-29 Make one shot mod cancels not cancel currently held one shot mod
+//            instead it marks it as consumed so it acts as if it was a normal
+//            modifier being held
 
-// TODO: Make one shot mod layers not consume modifier when its keys are
-//       pressed, also make the symbols and numbers not follow shift
+// TODO: Make the symbols and numbers not follow shift
 
 enum layers {
     _COLEMAKDH = 0,
