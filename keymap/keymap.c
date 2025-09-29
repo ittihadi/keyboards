@@ -1,15 +1,6 @@
 // Copyright 2023 QMK
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#include "action_layer.h"
-#include "action_util.h"
-#include "keycodes.h"
-#include "keymap_us.h"
-#include "modifiers.h"
-#include "progmem.h"
-#include "quantum.h"
-#include "quantum_keycodes.h"
-#include <stdint.h>
 #include QMK_KEYBOARD_H
 
 #include "oneshot.h"
