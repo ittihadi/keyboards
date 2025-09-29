@@ -6,12 +6,37 @@
 #include "keycodes.h"
 #include "keymap_us.h"
 #include "modifiers.h"
+#include "progmem.h"
 #include "quantum.h"
 #include "quantum_keycodes.h"
 #include <stdint.h>
 #include QMK_KEYBOARD_H
 
 #include "oneshot.h"
+
+// Based on Corne default
+// 2025-09-10 Callum style mods
+// 2025-09-14 Modified the symbol layers from
+//  https://getreuer.info/posts/keyboards/symbol-layer/index.html
+//   getreuer
+//   seniply
+// Rearrange layers and moved extra functions to "OTHER" layer for cleaner
+// function layer
+// 2025-09-17 Add CAPSWORD toggle button to function layer
+// 2025-09-18 Rearrange number row and function row similar to
+//  https://www.jonashietala.se/blog/2021/06/03/the-t-34-keyboard-layout/
+//  and https://github.com/callum-oakley/qmk_firmware/tree/master/users/callum
+// 2025-09-27 Swap Backspace and Right Alt keys
+// 2025-09-27 Add ctrl and alt to function layer
+// 2025-09-27 Move F11 and F12 to inner index finger
+// 2025-09-27 Add Ctrl Z X C V to nav layer
+// 2025-09-29 Change OSM super key on numnav layer to normal super key and
+//            remove super key from thumb cluster (at least on base layer)
+// 2025-09-29 Remove default QWERTY layer, gaming layer will suffice in typing
+//            QWERTY
+
+// TODO: Make one shot mod layers not consume modifier when its keys are
+//       pressed, also make the symbols and numbers not follow shift
 
 enum layers {
     _COLEMAKDH = 0,
@@ -37,28 +62,7 @@ enum keycodes {
 #define LA_FUN MO(_FUN)
 
 // clang-format off
-// Based on Corne default
-// 2025-09-10 Callum style mods
-// 2025-09-14 Modified the symbol layers from
-//  https://getreuer.info/posts/keyboards/symbol-layer/index.html
-//   getreuer
-//   seniply
-// Rearrange layers and moved extra functions to "OTHER" layer for cleaner function layer
-// 2025-09-17 Add CAPSWORD toggle button to function layer
-// 2025-09-18 Rearrange number row and function row similar to
-//  https://www.jonashietala.se/blog/2021/06/03/the-t-34-keyboard-layout/
-//  and https://github.com/callum-oakley/qmk_firmware/tree/master/users/callum
-// 2025-09-27 Swap Backspace and Right Alt keys
-// 2025-09-27 Add ctrl and alt to function layer
-// 2025-09-27 Move F11 and F12 to inner index finger 
-// 2025-09-27 Add Ctrl Z X C V to nav layer
-// 2025-09-29 Change OSM super key on numnav layer to normal super key and
-//            remove super key from thumb cluster (at least on base layer)
-// 2025-09-29 Remove default QWERTY layer, gaming layer will suffice in typing
-//            QWERTY
 
-// TODO: Make one shot mod layers not consume modifier when its keys are pressed,
-//       also make the symbols and numbers not follow shift
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      /*
       * ┌───┬───┬───┬───┬───┬───┐       ┌───┬───┬───┬───┬───┬───┐
