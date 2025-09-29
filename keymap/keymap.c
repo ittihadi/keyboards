@@ -180,7 +180,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
      /*
       * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
-      * │ BOOT  │       │       │       │       │ GAMIN │       │       │ COLEM │       │       │       │       │
+      * │ BOOT  │       │       │       │       │ GAMIN │       │       │       │       │       │       │       │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
       * │ Togg  │ HueUp │ SatUp │ ValUp │       │       │       │ VoMut │ VolDn │ VolUp │  Fwd  │       │       │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
@@ -193,9 +193,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       *                                           └───────┘   └───────┘
       */
     [_OTHER] = LAYOUT_split_3x6_3(
-        QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TO(_GAME),                          XXXXXXX, DF(_COLEMAKDH),XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        RM_TOGG, RM_HUEU, RM_SATU, RM_VALU, XXXXXXX, XXXXXXX,                            KC_MUTE, KC_VOLD,       KC_VOLU, KC_MFFD, XXXXXXX, XXXXXXX,
-        RM_NEXT, RM_HUED, RM_SATD, RM_VALD, XXXXXXX, _______,                            XXXXXXX, KC_BRID,       KC_BRIU, KC_MRWD, XXXXXXX, XXXXXXX,
+        QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TO(_GAME),                          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        RM_TOGG, RM_HUEU, RM_SATU, RM_VALU, XXXXXXX, XXXXXXX,                            KC_MUTE, KC_VOLD, KC_VOLU, KC_MFFD, XXXXXXX, XXXXXXX,
+        RM_NEXT, RM_HUED, RM_SATD, RM_VALD, XXXXXXX, _______,                            XXXXXXX, KC_BRID, KC_BRIU, KC_MRWD, XXXXXXX, XXXXXXX,
                                             XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX, XXXXXXX, XXXXXXX
     ),
      /*
