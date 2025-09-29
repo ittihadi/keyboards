@@ -1,0 +1,337 @@
+// Copyright 2023 QMK
+// SPDX-License-Identifier: GPL-2.0-or-later
+
+#include "action_layer.h"
+#include "action_util.h"
+#include "keycodes.h"
+#include "keymap_us.h"
+#include "modifiers.h"
+#include "quantum.h"
+#include "quantum_keycodes.h"
+#include <stdint.h>
+#include QMK_KEYBOARD_H
+
+#include "oneshot.h"
+
+enum layers {
+    _COLEMAKDH = 0,
+    _GAME,
+    _QWERTY,
+    _CAPSWORD,
+    _NUMNAV,
+    _SYM,
+    _FUN,
+    _OTHER,
+};
+
+enum keycodes {
+    OS_SHFT = SAFE_RANGE,
+    OS_CTRL,
+    OS_ALT,
+    OS_GUI,
+
+    CW_NCSP, // Capsword non-cancelling space
+};
+
+#define LA_NUM MO(_NUMNAV)
+#define LA_SYM MO(_SYM)
+#define LA_FUN MO(_FUN)
+
+// clang-format off
+// Based on Corne default
+// 2025-09-10 Callum style mods
+// 2025-09-14 Modified the symbol layers from
+//  https://getreuer.info/posts/keyboards/symbol-layer/index.html
+//   getreuer
+//   seniply
+// Rearrange layers and moved extra functions to "OTHER" layer for cleaner function layer
+// 2025-09-17 Add CAPSWORD toggle button to function layer
+// 2025-09-18 Rearrange number row and function row similar to
+//  https://www.jonashietala.se/blog/2021/06/03/the-t-34-keyboard-layout/
+//  and https://github.com/callum-oakley/qmk_firmware/tree/master/users/callum
+// 2025-09-27 Swap Backspace and Right Alt keys
+// 2025-09-27 Add ctrl and alt to function layer
+// 2025-09-27 Move F11 and F12 to inner index finger 
+// 2025-09-27 Add Ctrl Z X C V to nav layer
+// 2025-09-29 Change OSM super key on numnav layer to normal super key and
+//            remove super key from thumb cluster (at least on base layer)
+
+// TODO: Make one shot mod layers not consume modifier when its keys are pressed,
+//       also make the symbols and numbers not follow shift
+const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+     /*
+      * ┌───┬───┬───┬───┬───┬───┐       ┌───┬───┬───┬───┬───┬───┐
+      * │Tab│ Q │ W │ F │ P │ B │       │ J │ L │ U │ Y │ ; │Alt│
+      * ├───┼───┼───┼───┼───┼───┤       ├───┼───┼───┼───┼───┼───┤
+      * │Ctl│ A │ R │ S │ T │ G │       │ M │ N │ E │ I │ O │ ' │
+      * ├───┼───┼───┼───┼───┼───┤       ├───┼───┼───┼───┼───┼───┤
+      * │Sft│ Z │ X │ C │ D │ V │       │ K │ H │ , │ . │ / │Esc│
+      * └───┴───┴───┴───┴───┴───┘       └───┴───┴───┴───┴───┴───┘
+      *               ┌───┐                   ┌───┐
+      *               │GUI├───┐           ┌───┤Bsp│
+      *               └───┤NUM├───┐   ┌───┤SYM├───┘
+      *                   └───┤Spc│   │Ent├───┘
+      *                       └───┘   └───┘
+      */
+    [_COLEMAKDH] = LAYOUT_split_3x6_3(
+        KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_RALT,
+        KC_LCTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                                KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
+        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                                KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_ESC,
+                                            KC_LGUI,  LA_NUM,  KC_SPC,           KC_ENT,  LA_SYM,  KC_BSPC
+    ),
+     /*
+      * ┌───┬───┬───┬───┬───┬───┐       ┌───┬───┬───┬───┬───┬───┐
+      * │Tab│ Q │ W │ E │ R │ T │       │ Y │ U │ I │ O │ P │Alt│
+      * ├───┼───┼───┼───┼───┼───┤       ├───┼───┼───┼───┼───┼───┤
+      * │Ctl│ A │ S │ D │ F │ G │       │ H │ J │ K │ L │ ; │ ' │
+      * ├───┼───┼───┼───┼───┼───┤       ├───┼───┼───┼───┼───┼───┤
+      * │Sft│ Z │ X │ C │ V │ B │       │ N │ M │ , │ . │ / │Esc│
+      * └───┴───┴───┴───┴───┴───┘       └───┴───┴───┴───┴───┴───┘
+      *               ┌───┐                   ┌───┐
+      *               │GUI├───┐           ┌───┤Bsp│
+      *               └───┤NUM├───┐   ┌───┤SYM├───┘
+      *                   └───┤Spc│   │Ent├───┘
+      *                       └───┘   └───┘
+      */
+    [_QWERTY] = LAYOUT_split_3x6_3(
+        KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                                KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_RALT,
+        KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ESC,
+                                            KC_LGUI,  LA_NUM,  KC_SPC,           KC_ENT,  LA_SYM,  KC_BSPC
+    ),
+     /* 
+      * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
+      * │  Tab  │   6   │   4   │   0   │   2   │   8   │       │   9   │   3   │   1   │   5   │   7   │ R Alt │
+      * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
+      * │       │  GUI  │ OSAlt │ OSSft │ OSCtl │       │       │   ←   │   ↓   │   ↑   │   → 	│       │ Pscrn │
+      * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
+      * │       │ Ctl Z │ Ctl X │ Ctl C │       │ Ctl V │       │ Home  │ PgDwn │  PgUp │  End  │       │  Esc  │
+      * └───────┴───────┴───────┴───────┴───────┴───────┘       └───────┴───────┴───────┴───────┴───────┴───────┘
+      *                           ┌───────┐                                   ┌───────┐
+      *                           │       ├───────┐                   ┌───────┤  Bsp  │
+      *                           └───────┤  ---  ├───────┐   ┌───────┤  FUN  ├───────┘
+      *                                   └───────┤  Spc  │   │  Ent  ├───────┘
+      *                                           └───────┘   └───────┘
+      */
+    [_NUMNAV] = LAYOUT_split_3x6_3(
+        KC_TAB,  KC_6,    KC_4,    KC_0,    KC_2,    KC_8,                                KC_9,    KC_3,    KC_1,    KC_5,    KC_7,    KC_RALT,
+        XXXXXXX, KC_LGUI, OS_ALT,  OS_SHFT, OS_CTRL, XXXXXXX,                             KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,XXXXXXX, KC_PSCR,
+        XXXXXXX, C(KC_Z), C(KC_X), C(KC_C), XXXXXXX, C(KC_V),                             KC_HOME, KC_PGDN, KC_PGUP, KC_END,  XXXXXXX, KC_ESC,
+                                            XXXXXXX, _______,  KC_SPC,           KC_ENT,   LA_FUN, KC_BSPC
+    ),
+     /*
+      * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
+      * │  Tab  │   `   │   <   │   >   │   -   │   |   │       │   ^   │   {   │   }   │   $   │   \   │  Del  │
+      * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
+      * │   ?   │   !   │   *   │   /   │   =   │   &   │       │   #   │ OSCtl │ OSSft │ OSAlt │   "   │   '   │
+      * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
+      * │  Sft  │   ~   │   +   │   [   │   ]   │   %   │       │   @   │   (   │   )   │   :   │   _   │  Esc  │
+      * └───────┴───────┴───────┴───────┴───────┴───────┘       └───────┴───────┴───────┴───────┴───────┴───────┘
+      *                           ┌───────┐                                   ┌───────┐
+      *                           │  GUI  ├───────┐                   ┌───────┤  Bsp  │
+      *                           └───────┤  FUN  ├───────┐   ┌───────┤  ---  ├───────┘
+      *                                   └───────┤  Spc  │   │  Ent  ├───────┘
+      *                                           └───────┘   └───────┘
+      */
+    [_SYM] = LAYOUT_split_3x6_3(
+        KC_TAB,   KC_GRV, KC_LABK, KC_RABK, KC_MINS, KC_PIPE,                            KC_CIRC, KC_LCBR, KC_RCBR,  KC_DLR, KC_BSLS,  KC_DEL,
+        KC_QUES, KC_EXLM, KC_ASTR, KC_SLSH,  KC_EQL, KC_AMPR,                            KC_HASH, OS_CTRL, OS_SHFT,  OS_ALT, KC_DQUO, KC_QUOT,
+        KC_LSFT, KC_TILD, KC_PLUS, KC_LBRC, KC_RBRC, KC_PERC,                              KC_AT, KC_LPRN, KC_RPRN, KC_COLN, KC_UNDS,  KC_ESC,
+                                            KC_LGUI,  LA_FUN,  KC_SPC,           KC_ENT, _______, KC_BSPC
+    ),
+     /*
+      * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
+      * │       │  F6   │  F4   │  F10  │  F2   │  F8   │       │  F9   │  F3   │  F1   │  F5   │  F7   │       │
+      * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
+      * │       │       │ OSAlt │ CapWr │ OSCtl │  F12  │       │  F11  │ OSCtl │ CapWr │ OSAlt │       │       │
+      * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
+      * │       │       │       │       │       │ Other │       │       │       │       │       │       │       │
+      * └───────┴───────┴───────┴───────┴───────┴───────┘       └───────┴───────┴───────┴───────┴───────┴───────┘
+      *                           ┌───────┐                                   ┌───────┐
+      *                           │  GUI  ├───────┐                   ┌───────┤       │
+      *                           └───────┤  ---  ├───────┐   ┌───────┤  ---  ├───────┘
+      *                                   └───────┤  Spc  │   │  Ent  ├───────┘
+      *                                           └───────┘   └───────┘
+      */
+    [_FUN] = LAYOUT_split_3x6_3(
+        XXXXXXX,   KC_F6,   KC_F4,  KC_F10,   KC_F2,   KC_F8,                              KC_F9,   KC_F3,   KC_F1,   KC_F5,   KC_F7, XXXXXXX,
+        XXXXXXX, XXXXXXX,  OS_ALT, CW_TOGG, OS_CTRL,  KC_F12,                             KC_F11, OS_CTRL, CW_TOGG,  OS_ALT, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, MO(_OTHER),                         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+                                            KC_LGUI, _______,  KC_SPC,           KC_ENT, _______, XXXXXXX
+    ),
+     /* GAME
+      * ┌───┬───┬───┬───┬───┬───┐       ┌───┬───┬───┬───┬───┬───┐
+      * │Tab│ Q │ W │ E │ R │ T │       │ Y │ U │ I │ O │ P │Alt│
+      * ├───┼───┼───┼───┼───┼───┤       ├───┼───┼───┼───┼───┼───┤
+      * │Ctl│ A │ S │ D │ F │ G │       │ H │ J │ K │ L │ ^ │Esc│
+      * ├───┼───┼───┼───┼───┼───┤       ├───┼───┼───┼───┼───┼───┤
+      * │Sft│ Z │ X │ C │ V │ B │       │ N │ M │   │ < │ v │ > │
+      * └───┴───┴───┴───┴───┴───┘       └───┴───┴───┴───┴───┴───┘
+      *               ┌───┐                   ┌───┐
+      *               │GUI├───┐           ┌───┤Bsp│
+      *               └───┤   ├───┐   ┌───┤OFF├───┘
+      *                   └───┤Spc│   │Ent├───┘
+      *                       └───┘   └───┘
+      */
+    [_GAME] = LAYOUT_split_3x6_3(
+        KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                                KC_Y,           KC_U,    KC_I,    KC_O,    KC_P,    KC_RALT,
+        KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                KC_H,           KC_J,    KC_K,    KC_L,    KC_UP,   KC_ESC,
+        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                KC_N,           KC_M,    XXXXXXX, KC_LEFT, KC_DOWN, KC_RIGHT,
+                                            KC_LGUI, XXXXXXX,  KC_SPC,           KC_ENT,  TO(_COLEMAKDH) ,KC_BSPC
+    ),
+     /*
+      * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
+      * │ BOOT  │       │       │       │       │ GAMIN │       │ QWERT │ COLEM │       │       │       │       │
+      * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
+      * │ Togg  │ HueUp │ SatUp │ ValUp │       │       │       │ VoMut │ VolDn │ VolUp │  Fwd  │       │       │
+      * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
+      * │ Next  │ HueDn │ SatDn │ ValDn │       │  ---  │       │       │ BriDn │ BriUp │  Rwn  │       │       │
+      * └───────┴───────┴───────┴───────┴───────┴───────┘       └───────┴───────┴───────┴───────┴───────┴───────┘
+      *                           ┌───────┐                                   ┌───────┐
+      *                           │       ├───────┐                   ┌───────┤       │
+      *                           └───────┤       ├───────┐   ┌───────┤       ├───────┘
+      *                                   └───────┤       │   │       ├───────┘
+      *                                           └───────┘   └───────┘
+      */
+    [_OTHER] = LAYOUT_split_3x6_3(
+        QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TO(_GAME),                          DF(_QWERTY),DF(_COLEMAKDH),XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        RM_TOGG, RM_HUEU, RM_SATU, RM_VALU, XXXXXXX, XXXXXXX,                            KC_MUTE,    KC_VOLD,       KC_VOLU, KC_MFFD, XXXXXXX, XXXXXXX,
+        RM_NEXT, RM_HUED, RM_SATD, RM_VALD, XXXXXXX, _______,                            XXXXXXX,    KC_BRID,       KC_BRIU, KC_MRWD, XXXXXXX, XXXXXXX,
+                                            XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX, XXXXXXX,    XXXXXXX
+    ),
+     /*
+      * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
+      * │  ---  │  ---  │  ---  │  ---  │  ---  │  ---  │       │  ---  │  ---  │  ---  │  ---  │  ---  │  ---  │
+      * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
+      * │  ---  │  ---  │  ---  │  ---  │  ---  │  ---  │       │  ---  │  ---  │  ---  │  ---  │  ---  │  ---  │
+      * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
+      * │  ---  │  ---  │  ---  │  ---  │  ---  │  ---  │       │  ---  │  ---  │  ---  │  ---  │  ---  │  ---  │
+      * └───────┴───────┴───────┴───────┴───────┴───────┘       └───────┴───────┴───────┴───────┴───────┴───────┘
+      *                           ┌───────┐                                   ┌───────┐
+      *                           │ CWSpc ├───────┐                   ┌───────┤  ---  │
+      *                           └───────┤  ---  ├───────┐   ┌───────┤  ---  ├───────┘
+      *                                   └───────┤ Space │   │  ---  ├───────┘
+      *                                           └───────┘   └───────┘
+      */
+    [_CAPSWORD] = LAYOUT_split_3x6_3(
+        _______, _______, _______, _______, _______, _______,                             _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,                             _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,                             _______, _______, _______, _______, _______, _______,
+                                            CW_NCSP, _______,  KC_SPC,          _______,  _______, _______
+    ),
+};
+// clang-format on
+
+bool is_oneshot_cancel_key(uint16_t keycode) {
+    switch (keycode) {
+        case LA_SYM:
+        case LA_NUM:
+            return true;
+        default:
+            return false;
+    }
+}
+
+bool is_oneshot_ignored_key(uint16_t keycode) {
+    switch (keycode) {
+        case LA_SYM:
+        case LA_NUM:
+        case OS_SHFT:
+        case OS_CTRL:
+        case OS_ALT:
+        case OS_GUI:
+        case KC_LSFT:
+            return true;
+        default:
+            return false;
+    }
+}
+
+oneshot_state os_shft_state = os_up_unqueued;
+oneshot_state os_ctrl_state = os_up_unqueued;
+oneshot_state os_alt_state = os_up_unqueued;
+oneshot_state os_mod_state = os_up_unqueued;
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    update_oneshot(&os_shft_state, KC_LSFT, OS_SHFT, keycode, record);
+    update_oneshot(&os_ctrl_state, KC_LCTL, OS_CTRL, keycode, record);
+    update_oneshot(&os_alt_state, KC_LALT, OS_ALT, keycode, record);
+    update_oneshot(&os_mod_state, KC_LWIN, OS_GUI, keycode, record);
+
+    switch (keycode) {
+        case CW_NCSP:
+            if (record->event.pressed) {
+                send_char(' ');
+            }
+            break;
+    }
+
+    return true;
+}
+
+void caps_word_set_user(bool active) {
+    if (active) {
+        layer_on(_CAPSWORD);
+    }
+    else {
+        layer_off(_CAPSWORD);
+    }
+}
+
+bool caps_word_press_user(uint16_t keycode) {
+    switch (keycode) {
+        case KC_A:
+        case KC_B:
+        case KC_C:
+        case KC_D:
+        case KC_E:
+        case KC_F:
+        case KC_G:
+        case KC_H:
+        case KC_I:
+        case KC_J:
+        case KC_K:
+        case KC_L:
+        case KC_M:
+        case KC_N:
+        case KC_O:
+        case KC_P:
+        case KC_Q:
+        case KC_R:
+        case KC_S:
+        case KC_T:
+        case KC_U:
+        case KC_V:
+        case KC_W:
+        case KC_X:
+        case KC_Y:
+        case KC_Z:
+            add_weak_mods(MOD_BIT_LSHIFT);
+            return true;
+
+        case KC_0:
+        case KC_1:
+        case KC_2:
+        case KC_3:
+        case KC_4:
+        case KC_5:
+        case KC_6:
+        case KC_7:
+        case KC_8:
+        case KC_9:
+        case KC_COMM: // Add more keys that don't disable CAPSWORD and don't autocap -
+        case KC_DOT:
+        case KC_UNDS:
+        case KC_MINS:
+        case KC_BSPC:
+        case KC_DEL:
+        case KC_SLSH:
+        case CW_NCSP:
+            return true;
+
+        default:
+            return false;
+    }
+}
+
+// vim: nowrap
