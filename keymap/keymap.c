@@ -27,6 +27,10 @@
 //            QWERTY
 // 2025-09-29 Add combos for tab and backspace on base layer, exact
 //            configuration is being considered
+// 2025-09-29 Move numbers to the same layer as functions, add combo for
+//            capsword trigger, move tab on nav layer closer in by a column,
+//            add backspace and delete into symbol layer, and cleaned up some
+//            unused keys
 // 2025-09-29 Make one shot mod cancels not cancel currently held one shot mod
 //            instead it marks it as consumed so it acts as if it was a normal
 //            modifier being held
