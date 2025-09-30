@@ -12,8 +12,10 @@ test*
 *.png
 *.svg
 
+# Blog items
 node_modules/
-
 blog/public/images/raw/
+blog/_site
 
 compile_commands.json
+
