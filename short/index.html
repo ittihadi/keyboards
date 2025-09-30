@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/keyboards/bundle.css">
+    
+        <title>Making a Handwired Split Keyboard</title>
+    
+  </head>
+  <body>
+    <div class="page-layout">
+      <h1>Building a Handwired Keyboard (Short Version)</h1>
+<h2>Background</h2>
+<p>This project began around the beginning of 2025 when I started getting
+recommendations of &quot;ergonomic keymaps&quot; and became interested in them. It
+started with simple things like HHKB's control key in the place of caps lock,
+or me swapping my alt and windows keys around for easier navigation with my
+window manager. Eventually I discovered the <a href="https://www.zsa.io/voyager">ZSA
+Voyager</a> and wanted to try something sleek like it,
+but since I couldn't buy it, I looked for alternatives.</p>
+<p>A bit of browsing later and I landed on the Crkbd's form factor. At first I
+wanted to just print its supplied PCB files but after failing to find an
+economical option locally, and after seeing that it's possible to handwire a
+keyboard together, I decided I could try doing that instead.</p>
+<h2>Design</h2>
+<p>I wanted to avoid hardwiring my switches to the wires directly and instead keep
+using sockets. Lucky for me I found <a href="">this reddit post</a> where the author did
+exactly that with a 3D printed plate, including divets which hold the key
+sockets in place.</p>
+<p>At first I thought I could edit STL files directly like I could image files,
+but after messing around for some time it turns out that unfortunately I can't.
+So I had to find a CAD software that ran decently well on my laptop, as last
+time I tried a CAD suite, the app was running like a slideshow.</p>
+<p>I found that both FreeCAD and OpenSCAD ran pretty well on my machine, with
+OpenSCAD being more stable, so I went with that option. First I designed the
+switch plate, which helps align the switches to where they're supposed to be.
+For the sizing I followed both this <a href="https://matt3o.com/anatomy-of-a-keyboard/">Keyboard Anatomy
+Guide</a> and <a href="https://github.com/foostan/crkbd">Crkbd's footprint
+image</a>, slightly deviating only in making the
+plate 1.45mm thick instead of the full 1.5mm, in case the print ended up being
+oversized instead of undersized.</p>
+<figure><img src="/images/cad_switch_plate.webp" alt="CAD preview of the switch mount plates" loading="lazy" decoding="async"><figcaption>Switch mount plate design</figcaption></figure>
+<p>I ordered the print through a listing on Shopee and after a week or so I
+received it, bent... but it wasn't the end of the world since this plate could
+be flattened quite a bit and putting in the switches should also force it flat.</p>
+<figure><img src="/images/print_result_switch_plate.webp" alt="Switch mount plate printed out" loading="lazy" decoding="async"><figcaption>Switch mount plate prints, a <em>bit</em> bent</figcaption></figure>
+<p>After seeing how well the plate went it was time for the PCB substitute, the
+case, and the cover. The PCB substitute was identical in shape to the switch
+plates, except it has different holes to allow only the switches' pins and legs
+to go through. I considered whether or not I should even support 5 pin switches
+but since it was better to play safe I did.</p>
+<p>The measurements for the holes were taken from the specification sheet of the
+<a href="">BOX White</a> switches,
+the <a href="">Kailh Switch Sockets</a>,
+and the <a href="">WS2812B LED</a>
+I bought. Since I wanted to have slots for my sockets, LEDs, and wires, I added
+those too.</p>
+<p>Here's what I ended up with</p>
+<figure><img src="/images/cad_pcb.webp" alt="CAD preview of the wiring plate" loading="lazy" decoding="async"><figcaption>Wiring plate design</figcaption></figure>
+<p>I also included holes for pin header legs both for the USB-C interconnect as
+well as the RP2040-Zero MCU.</p>
+<p>When I was designing the case I stumbled upon the <a href="">BOSL2 library</a>,
+which could give me easier rounding in OpenSCAD itself. Utilizing that library I
+designed both the case and the MCU cover and had significantly easier time making
+it round</p>
+<figure><img src="/images/cad_case.webp" alt="CAD preview of the case" loading="lazy" decoding="async"><figcaption>Case design</figcaption></figure>
+<figure><img src="/images/cad_cover.webp" alt="CAD preview of the cover" loading="lazy" decoding="async"><figcaption>MCU cover design</figcaption></figure>
+<p>Since most Crkbd builds use an acrylic plate or OLED screen to cover up the MCU I
+had to make some creative liberties in designing a full cover that wouldn't leave
+the MCU open.</p>
+<p>After all that's done, I ordered them to be printed, this time with extra packaging
+to avoid getting them bent again, or worse, broken, and in ABS instead of PLA this
+time.</p>
+<p>Thankfully they arrived safely</p>
+<figure><img src="/images/print_result_full.webp" alt="Case, wiring plate, and MCU cover prints" loading="lazy" decoding="async"><figcaption>The print results looking good</figcaption></figure>
+<h2>Assembly</h2>
+<p>The first thing I decided to tackle once I got the prints was to install the
+heat-set thread inserts for the screws. This is when I discovered that the
+holes for these were undersized, and gradually, I would find out that in fact
+<em>all</em> the holes I have in this were undersized.</p>
+<p>After some quick browsing I decided to get some sandpaper and sand away some of
+the plastic in order to make these holes larger, this alone ended up pushing
+this project back weeks since all the holes were milimeters in diameter, and
+they <em>had</em> to be enlarged.</p>
+<p>I also didn't want to reprint these parts because they were pretty pricey and I
+didn't want to discard a whole set of them for nothing.</p>
+<p>And so I sanded, at first only the screw holes, but eventually also the socket
+holes, the LED slots, the switch leg holes, the pin header holes, and even the
+wire guides. The sandpaper I ended up using were 400 grit, they weren't too
+hard to cut into thin strips but also wasn't so fine it took forever to remove
+a substantial amount of material.</p>
+<p>Once I got some holes that would actually fit my parts I could start the actual
+assembly. The heat-set inserts weren't that difficult to install, though I
+could've bought ones more specialized for 3D prints, as these ones were a little
+hard to align properly.</p>
+<figure><img src="/images/heat_set_inserts.webp" alt="Heat-set inserts" loading="lazy" decoding="async"><figcaption>Installing the heat-set inserts</figcaption></figure>
+<p>After a test fit I wanted to install the interconnects first, since those also
+didn't have active components and... they were too far from the hole. Turns out,
+not only did I make the header holes too small, I also put them milimeters too
+deep and I couldn't actually insert the USB plug correctly, so I had to <em>move</em>
+the holes closer. This, along with moving the MCU's header holes closer, as
+that was also too far in, was annoying, but again, I didn't want to reprint.</p>
+<figure><img src="/images/moved_interconnect_slots.webp" alt="Shifted interconnect pin holes" loading="lazy" decoding="async"><figcaption>Moved interconnect pin holes</figcaption></figure>
+<p>I decided to start with the left half of the keyboard first, so I tried seeing
+if the parts fit and... they don't, again, because the holes were too small. So
+I had to shave off some material to get them to fit. After that then I finally
+start installing, first up the interconnects.</p>
+<figure><img src="/images/glued_interconnect.webp" alt="Glued in intercoonnect plug" loading="lazy" decoding="async"><figcaption>The interconnect plug attached with glue</figcaption></figure>
+<p>It was also around this time that I decided to try using hot glue to attach
+parts together. Which turns out to be a horrible decision down the line, not
+that hot glue won't work, but that hot glue kept melting whenever something
+close to it was hot.</p>
+<p>Next up I installed the rubber feet, of course, the holes were also slightly
+undersized.</p>
+<figure><img src="/images/rubber_feet.webp" alt="Attaching the rubber feet" loading="lazy" decoding="async"><figcaption>Installing the rubber feet</figcaption></figure>
+<p>Since I was going for hot glue, I first hot glued the LEDs and sockets in. This
+was a bit messy, but in my mind it was fine.</p>
+<figure><img src="/images/left_glued_back.webp" alt="Left half glued components" loading="lazy" decoding="async"><figcaption>The LEDs and sockets glued into place</figcaption></figure>
+<p>Then there's the handedness resistor, which is used by the firmware to decide
+which half of the keymap it uses. At first I used the 5V pin from the MCU, but
+I pretty quickly learned that I couldn't do that since the GPIO pins on the
+RP2040-Zero doesn't handle 5V. Luckily before ever plugging in the MCU and
+frying it. So I switched it to the 3.3V pin.</p>
+<p>At this point I didn't have a concrete idea of how to structure my wiring, so I
+just did what I thought was easiest first. In this case I did the interconnect
+wires first, which also showed me how easy it was to melt off the wires'
+insulation.</p>
+<p>After that I soldered in the LEDs' data and power lines, because in my mind
+it's the better one to do before doing the switches. And this ends up working
+pretty nicely, though not without quite a few connection errors from bad joints
+both for data and power.</p>
+<figure><img src="/images/left_first_led_back.webp" alt="Left half LED wiring" loading="lazy" decoding="async"><figcaption>Wiring for the LEDs</figcaption></figure>
+<figure><img src="/images/left_first_led.webp" alt="Left half LED test" loading="lazy" decoding="async"><figcaption>Testing the LEDs</figcaption></figure>
+<p>So now that that's working, I move on to the switches, starting from the
+diodes, and then the wires. I test it... and it runs!</p>
+<p>At this point it was getting pretty late, but I felt like I just had to finish
+it, and so I put it into the case and... it doesn't work... weird. I try
+pushing it around in the case and it kind of works? I thought it was another
+short, this time between the case and the switches, but I couldn't figure it
+out.</p>
+<p>So I was pushing around the MCU and I accidentally shorted the MCU itself.<br>
+<em>Oh no</em>. The USB plug got really hot and it just refused to work. Not wanting
+to risk a fire I decide to stop, and for a while after I took a break since I
+got pretty bummed out from losing an MCU.</p>
+<p>In my break Idecided to buy new switches and keycaps so that my old keyboard
+can still be used even after I'm done making this split one.</p>
+<p>Before starting work on the right half I also figured it'd be a great idea to
+find some better wires first to make my chances better since the current ones I
+had were not great to bend around. It didn't take me long to find some flexible
+wires, some of which I'd end up using, and some of which I wouldn't.</p>
+<p>Another thing I found out was that the USB holes I made were actually both too
+deep and too shallow, so the plug had a hard time clicking into place since the
+body of the USB couldn't fit into the slot nicely. This led to me carving out a
+sizeable chunk from the holes in order to fit the plugs better, it wasn't the
+best looking, but it got the job done and at this point, I just wanted to get
+this done with.</p>
+<p>This time around I decided to be significantly more methodical with how I wired
+up the parts. So instead of doing all the LEDs and then all the switches, I did
+all the wires that can be set without overlapping wires first. So I did the LED
+data wires, then all the switch rows, then all the interconnects, then all the
+LED power lines, but not connecting the rows together, then finally the wires
+that will connect the switch rows with the MCU.</p>
+<p>This kept the total height of the wiring significantly shallower than before,
+and because I was also cutting longer wire segments and stripping them in the
+middle instead of making many short wire segments, it was also less fragile.</p>
+<p>This time around the wires were also sanded beforehand, because I saw a slight
+increase in ease of soldering and wanted to play it safe.</p>
+<figure><img src="/images/first_layer_right.webp" alt="Right half first layer" loading="lazy" decoding="async"><figcaption>The &quot;first layer&quot; of the right half</figcaption></figure>
+<p>Now I didn't use hot glue for this half, since I didn't want to deal with the
+mess it made, and because this side held all the parts in by friction good
+enough.</p>
+<p>After finishing up all of the &quot;first layer&quot; I moved on to the second, which
+included the column connecting all the LED power lines, the switch columns
+themselves as well as the connectors to the columns for the MCU.</p>
+<p>After all of that was done, I gave it a quick test and, after one minor LED
+issue, it worked perfectly! The input was consistent, the LEDs didn't flicker,
+and it fits in the case fine! After this glorious success I decided to take a
+little break to work on a game dev competition submission for a bit.</p>
+<figure><img src="/images/full_layer_right.webp" alt="Right half second layer" loading="lazy" decoding="async"><figcaption>The &quot;second layer&quot; of the right half</figcaption></figure>
+<figure><img src="/images/finished_right_assembled.webp" alt="Right half assembled" loading="lazy" decoding="async"><figcaption>The right side finished and assembled</figcaption></figure>
+<p>After a small break I got back to working on the project by desoldering the
+entire left half that I've done before, because I didn't like the quality of it
+and honestly didn't trust that it'd work properly. I spent a couple days
+cleaning up the old glue that was there before rewiring with the same procedure
+as the right half.</p>
+<p>I started with the LED wires, the switch rows, and the interconnect. Then
+blitzed through the rest of the wiring in a couple days because the new
+semester was starting soon and I wanted this done before then.</p>
+<p>In the end I finished all the soldering on the last day of vacation, and now
+that I had both halves it was time to test it out.</p>
+<figure><img src="/images/full_layer_left.webp" alt="Left half reworked" loading="lazy" decoding="async"><figcaption>Reworked left half</figcaption></figure>
+<p>Moment of truth, I connect both halves and, it works! Though the left half is a
+bit dodgy, and the LEDs sometimes flicker, but it works in general. After
+trying a bit more I decided that making the interconnect headers hotswap wasn't
+a great idea, so I replaced them with male headers to stop the connectors from
+losing contact randomly.</p>
+<p>The interconnect cable also can't be unplugged easily yet since if I wanted to
+plug it back in I'd have to hold the board with my hand to stop it from sliding.</p>
+<figure class="popout"><img src="/images/full_complete.webp" alt="Complete pair" loading="lazy" decoding="async"><figcaption>Both sides completed</figcaption></figure>
+<h2>A Strive for Ergonomics</h2>
+<p>On the second day of using the keyboard I decided that it's probably not the
+worst idea to switch to using Colemak-DH. I wasn't originally planning on
+switching but I thought I might as well so that I can make a whole new
+mapping in my brain for typing on this split keyboard instead of having to
+modify my muscle memory for QWERTY.</p>
+<figure><img src="/images/colemak_dh_main_matrix.webp" alt="Colemak-DH layout on an ortholinear" loading="lazy" decoding="async"><figcaption>Colemak-DH layout</figcaption></figure>
+<p>At first it was veeeery slow, but I could see the appeal almost immediately, as
+I could see that I didn't need to move my fingers nearly as much to type the
+more common words.</p>
+<p>Of course, I was still using the default number row and symbol layers, which
+made me move my hands to type more common characters, I was planning on
+rectifying this eventually, but not now.</p>
+<h2>Post Build Polishing</h2>
+<p>I got some free time when my Uni gave us a study from home order for the week
+so I decided it's the perfect moment to finish the assembly for real so I can
+bring this keyboard everywhere easier.</p>
+<p>The main issue I had was that I couldn't plug in the interconnect cable without
+opening the top cover, to remedy this I ended up just attaching a short
+toothpick with super glue to hold the pin headers in place, this seems to work
+reasonably well and allowed me to plug in the interconnect without the port
+sliding back.</p>
+<figure><img src="/images/toothpick_hack.webp" alt="Toothpick hack to stop the USB plug from sliding back" loading="lazy" decoding="async"><figcaption>Using a toothpick to stop sliding</figcaption></figure>
+<p>The other issue I had was that the left half of the board was disconnecting
+randomly. Thinking back to when I was attaching the MCU to this side I remember
+feeling that the pin headers were loose. At first I thought I should just
+change out the pin headers to male ones, but imagining the nightmare it'd be
+if I ever need to press the physical buttons on the MCU I ended up just putting
+on new female headers.</p>
+<h2>Personalization</h2>
+<p>After some time getting used to Colemak-DH, I wanted to make my modifier keys
+more ergonomic as well. The most common method for doing this is what are
+called &quot;Home-Row Mods&quot;, specifically where the modifier keys were placed under
+the home row finger positions and activated by holding down the key instead of
+tapping it.</p>
+<p>I've known of this method for a while but I didn't want to use it since I
+personally don't want to have timing based inputs. Luckily while browsing for
+alternative keymaps I discovered a
+<a href="">post</a> that mentioned &quot;Callum Style Mods&quot;,
+named after the person who popularized it.</p>
+<p>I decided to implement this first and after a few days of getting used to, it
+actually felt nice to use, and the fact that the keys were one shot meant that
+I could let go of the keys and still get a shifted input for my next key.</p>
+<p>This change also basically removed the need for the normal modifier keys in
+common typing scenarios.</p>
+<figure><img src="/images/callum_mods_1.webp" alt="Callum mods on nav layer" loading="lazy" decoding="async"></figure>
+<figure><img src="/images/callum_mods_2.webp" alt="Callum mods on sym layer" loading="lazy" decoding="async"><figcaption>Callum mods on number and symbol layers</figcaption></figure>
+<p>After seeing how nice Callum mods were and implementing it on both sides of my
+keyboard I needed to change up my symbol layer as well, since it was now
+conflicting with the right hand modifiers. Following a
+<a href="">post</a>
+about symbol layers by Getreuer, I decided to adapt their symbol layer and
+slightly tweak it to accomodate my modifier placement.</p>
+<figure><img src="/images/symbol_layer.webp" alt="Symbol layer" loading="lazy" decoding="async"><figcaption>Symbol layer inspired by getreuer</figcaption></figure>
+<p>Finally, I wanted to modify my number row, especially after seeing
+<a href="https://www.jonashietala.se/blog/2021/06/03/the-t-34-keyboard-layout/">Jonas Hietala's</a>
+keymap, though I did find a <a href="">reddit post</a>
+about optimizing the number row, I opted for the easier to learn layout and
+adapted the alternating number row to the top row instead of the home row.</p>
+<figure><img src="/images/number_row.webp" alt="Number row" loading="lazy" decoding="async"><figcaption>Alternating number row on num/nav layer</figcaption></figure>
+<p><code>Some time later</code></p>
+<p>Alghough after some trial and error I've decided to actually move my number row
+into the function layer and have both in the same place. This is also after
+realizing that by doing this I can alternate between numbers and symbols much
+easier by just pressing/letting go of the nav layer key.</p>
+<figure><img src="/images/number_function.webp" alt="Numbers moved to function layer" loading="lazy" decoding="async"><figcaption>Alternating numbers on home row along with functions</figcaption></figure>
+<h2>Conclusion</h2>
+<p>This project has been quite an interesting journey and I'm looking forward to
+improving on what I've made iteratively. As for actually using this new
+keyboard, I've actually become quite fond of it. It's actually quite fun to
+type with so little hand movement too!</p>
+<p>After this I'm looking to revamp the physical build of the case to make it more
+robust, as well adding a mechanism to secure the keyboard to my legs when I'm
+typing with them on my lap.</p>
+<p>Though in the future, should I make another keyboard from scratch, I'll choose
+to use of a proper PCB instead of this substitute, unless I'm doing a really
+simple build. This substitute board was a nice learning experience but it also
+proved to be a bit of a headache once it was time to wrangle the wires around.</p>
+<p>I'll also continue to iterate on my customization of this keyboard, even now
+after writing this I'm finding new ways to add more nice bits in order to
+minimize hand movement while maximizing comfort and speed. Things like combos
+and even more layers that I find from other people's keymaps give me things I
+can try.</p>
+
+    </div>
+    
+    
+  </body>
+</html>

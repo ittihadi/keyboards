@@ -1,0 +1,189 @@
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: #e2e7f9;
+  font-family: "Verdana", sans-serif;
+}
+
+b,
+strong {
+  color: #f7f8fd;
+}
+
+a b,
+a strong {
+  color: #74c7ec;
+}
+
+a {
+  color: #b4befe;
+}
+
+html {
+  color: #cdd6f4;
+  font-family: "Georgia", serif;
+  font-size: 1.2em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: #1e1e2e;
+}
+
+body {
+  /* width: 800px; */
+  /* padding: 15px 15px 60px 15px; */
+  /* display: flex; */
+  /* flex-direction: column; */
+}
+
+hr {
+  width: 100%;
+}
+
+blockquote {
+  border: 1px dotted white;
+  padding: 5px 15px;
+  margin: 0 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+blockquote h1 {
+  font-size: 1em;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+figure {
+  margin: 16px 0;
+  align-items: center;
+}
+
+figure img {
+  max-width: 100%;
+  max-height: 512px;
+  margin: auto;
+  display: block;
+}
+
+figure figcaption {
+  font-size: 0.8rem;
+  text-align: center;
+  color: #a6adc8;
+  padding: 8px 0 0 0;
+  font-family: ui-monospace,
+    Menlo, Monaco,
+    "Cascadia Mono", "Segoe UI Mono",
+    "Roboto Mono",
+    "Oxygen Mono",
+    "Ubuntu Mono",
+    "Source Code Pro",
+    "Fira Mono",
+    "Droid Sans Mono",
+    "Consolas", "Courier New", monospace;
+}
+
+.page-layout {
+  margin-bottom: 20vh;
+}
+
+.table-container {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  margin: 16px 0;
+}
+
+.solid-table {
+  border-collapse: collapse;
+  font-family: "Verdana", sans-serif;
+  font-size: 0.9rem;
+  background-color: #181825;
+  width: 100%;
+  min-width: max-content;
+}
+
+.solid-table tr:nth-of-type(even) {
+  background-color: #11111b;
+}
+
+.solid-table tr:last-of-type td {
+  font-weight: bolder;
+}
+
+.solid-table th {
+  border-bottom: 1px solid #313244;
+}
+
+.solid-table th,
+.solid-table td {
+  padding: 0.5rem 1.25rem;
+}
+
+.page-layout>*,
+.full-width>* {
+  grid-column: content;
+}
+
+/* beautify ignore:start */
+.page-layout,
+.full-width {
+  --minimum-content-padding: 2rem;
+
+  /** TRACK WIDTHS **/
+  --full-max-width: 1fr;
+  --popout-max-width: 1080px;
+  --content-max-width: 860px;
+  --inset-content-max-width: 640px;
+
+  /** TRACK SIZES **/
+  --full: minmax(var(--minimum-content-padding), 1fr);
+  --popout: minmax(0, calc((var(--popout-max-width) - var(--content-max-width)) * 0.5));
+  --content: minmax(0, calc((var(--content-max-width) - var(--inset-content-max-width)) * 0.5));
+  --inset-content: min(var(--inset-content-max-width), 100% - var(--minimum-content-padding) * 2);
+
+  display: grid;
+  grid-template-columns: 
+    [full-start]
+    var(--full)
+      [popout-start]
+      var(--popout)
+        [content-start]
+        var(--content)
+          [inset-content-start]
+          var(--inset-content)
+          [inset-content-end]
+        var(--content)
+        [content-end]
+      var(--popout)
+      [popout-end]
+    var(--full)
+    [full-end];
+  }
+}
+
+/** CLASSES **/
+.full { grid-column: full; }
+.full-start { grid-column-start: full-start; }
+.full-end { grid-column-end: full-end; }
+
+.popout { grid-column: popout; }
+.popout-start { grid-column-start: popout-start; }
+.popout-end { grid-column-end: popout-end; }
+
+.content { grid-column: content; }
+.content-start { grid-column-start: content-start; }
+.content-end { grid-column-end: content-end; }
+
+.inset-content { grid-column: inset-content; }
+.inset-content-start { grid-column-start: inset-content-start; }
+.inset-content-end { grid-column-end: inset-content-end; }
+
+.full-width { grid-column: full; }
+.full-content, .full-content-nopad { grid-column: full; }
+.full-content { padding-inline: var(--minimum-content-padding); }
+/* beautify ignore:end */
