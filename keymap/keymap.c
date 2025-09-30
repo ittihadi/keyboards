@@ -66,7 +66,6 @@ enum keycodes {
 
 #define LA_NAV MO(_NAV)
 #define LA_SYM MO(_SYM)
-#define LA_FUN MO(_FUN)
 
 const uint16_t PROGMEM uy_backspace[] = {KC_U, KC_Y, COMBO_END};
 const uint16_t PROGMEM zd_tab[] = {KC_Z, KC_D, COMBO_END};
@@ -122,7 +121,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX,  KC_TAB, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_DEL, KC_RALT,
         XXXXXXX, KC_LGUI, OS_ALT,  OS_SHFT, OS_CTRL, XXXXXXX,                             KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,KC_BSPC, KC_PSCR,
         XXXXXXX, C(KC_Z), C(KC_X), C(KC_C), XXXXXXX, C(KC_V),                             KC_HOME, KC_PGDN, KC_PGUP, KC_END,  XXXXXXX, KC_ESC,
-                                            XXXXXXX, _______,  KC_SPC,           KC_ENT,   LA_FUN, KC_BSPC
+                                            XXXXXXX, _______,  KC_SPC,           KC_ENT,  _______, KC_BSPC
     ),
      /*
       * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
@@ -142,7 +141,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB,   KC_GRV, KC_LABK, KC_RABK, KC_MINS, KC_PIPE,                            KC_CIRC, KC_LCBR, KC_RCBR,  KC_DLR, KC_BSLS,  KC_DEL,
         KC_QUES, KC_EXLM, KC_ASTR, KC_SLSH,  KC_EQL, KC_AMPR,                            KC_HASH, OS_CTRL, OS_SHFT,  OS_ALT, KC_DQUO, KC_QUOT,
         KC_LSFT, KC_TILD, KC_PLUS, KC_LBRC, KC_RBRC, KC_PERC,                              KC_AT, KC_LPRN, KC_RPRN, KC_COLN, KC_UNDS,  KC_ESC,
-                                            KC_LGUI,  LA_FUN,  KC_SPC,           KC_ENT, _______, KC_BSPC
+                                            KC_LGUI, _______,  KC_SPC,           KC_ENT, _______, KC_BSPC
     ),
      /*
       * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
@@ -272,6 +271,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 
     return true;
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    return update_tri_layer_state(state, _NAV, _SYM, _FUN);
 }
 
 void caps_word_set_user(bool active) {
