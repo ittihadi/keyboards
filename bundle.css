@@ -108,6 +108,10 @@ nav a:hover {
   color: #e2e7f9;
 }
 
+.shadow {
+  box-shadow: #11111b 0px 0px 30px 20px;
+}
+
 .page-layout {
   margin-bottom: 20vh;
 }
