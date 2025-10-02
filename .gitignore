@@ -5,12 +5,18 @@ blender/
 cq-venv/
 .cache/
 
+# Unused design files
 test*
 *.py
 *.stp
 *.stl
 *.png
 *.svg
+*.step
+*.FCStd
+*.FCBak
+*.csg
+polyround*
 
 # Blog items
 node_modules/
