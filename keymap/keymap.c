@@ -98,23 +98,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
      /* 
       * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
-      * │       │  Tab  │       │       │ C-Tab │       │       │       │       │       │       │  Del  │ R Alt │
+      * │       │  Tab  │       │       │ C-Tab │       │       │       │       │       │       │  Del  │       │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
       * │       │  GUI  │ OSAlt │ OSSft │ OSCtl │       │       │   ←   │   ↓   │   ↑   │   → 	│  Bsp  │ Pscrn │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
       * │       │ Ctl Z │ Ctl X │ Ctl C │       │ Ctl V │       │ Home  │ PgDwn │  PgUp │  End  │  Esc  │       │
       * └───────┴───────┴───────┴───────┴───────┴───────┘       └───────┴───────┴───────┴───────┴───────┴───────┘
       *                           ┌───────┐                                   ┌───────┐
-      *                           │       ├───────┐                   ┌───────┤  Bsp  │
+      *                           │       ├───────┐                   ┌───────┤       │
       *                           └───────┤  ---  ├───────┐   ┌───────┤  FUN  ├───────┘
       *                                   └───────┤  Spc  │   │  Ent  ├───────┘
       *                                           └───────┘   └───────┘
       */
     [_NAV] = LAYOUT_split_3x6_3(
-        XXXXXXX,  KC_TAB, XXXXXXX, XXXXXXX, CTL_TAB, XXXXXXX,                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_DEL, KC_RALT,
+        XXXXXXX,  KC_TAB, XXXXXXX, XXXXXXX, CTL_TAB, XXXXXXX,                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_DEL, XXXXXXX,
         XXXXXXX, KC_LGUI, OS_ALT,  OS_SHFT, OS_CTRL, XXXXXXX,                             KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,KC_BSPC, KC_PSCR,
         XXXXXXX, C(KC_Z), C(KC_X), C(KC_C), XXXXXXX, C(KC_V),                             KC_HOME, KC_PGDN, KC_PGUP, KC_END,   KC_ESC, XXXXXXX,
-                                            XXXXXXX, _______,  KC_SPC,           KC_ENT,  _______, KC_BSPC
+                                            XXXXXXX, _______,  KC_SPC,           KC_ENT,  _______, XXXXXXX
     ),
      /*
       * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
@@ -125,7 +125,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       * │  Sft  │   ~   │   +   │   [   │   ]   │   %   │       │   @   │   (   │   )   │   :   │   _   │  Esc  │
       * └───────┴───────┴───────┴───────┴───────┴───────┘       └───────┴───────┴───────┴───────┴───────┴───────┘
       *                           ┌───────┐                                   ┌───────┐
-      *                           │  GUI  ├───────┐                   ┌───────┤  Bsp  │
+      *                           │       ├───────┐                   ┌───────┤       │
       *                           └───────┤  FUN  ├───────┐   ┌───────┤  ---  ├───────┘
       *                                   └───────┤  Spc  │   │  Ent  ├───────┘
       *                                           └───────┘   └───────┘
@@ -134,7 +134,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB,   KC_GRV, KC_LABK, KC_RABK, KC_MINS, KC_PIPE,                            KC_CIRC, KC_LCBR, KC_RCBR,  KC_DLR, KC_BSLS,  KC_DEL,
         KC_QUES, KC_EXLM, KC_ASTR, KC_SLSH,  KC_EQL, KC_AMPR,                            KC_HASH, OS_CTRL, OS_SHFT,  OS_ALT, KC_DQUO, KC_QUOT,
         KC_LSFT, KC_TILD, KC_PLUS, KC_LBRC, KC_RBRC, KC_PERC,                              KC_AT, KC_LPRN, KC_RPRN, KC_COLN, KC_UNDS,  KC_ESC,
-                                            KC_LGUI, _______,  KC_SPC,           KC_ENT, _______, KC_BSPC
+                                            XXXXXXX, _______,  KC_SPC,           KC_ENT, _______, XXXXXXX
     ),
      /*
       * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
@@ -145,7 +145,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       * │       │       │       │       │   8   │ Other │       │       │   9   │       │       │       │       │
       * └───────┴───────┴───────┴───────┴───────┴───────┘       └───────┴───────┴───────┴───────┴───────┴───────┘
       *                           ┌───────┐                                   ┌───────┐
-      *                           │  GUI  ├───────┐                   ┌───────┤       │
+      *                           │       ├───────┐                   ┌───────┤       │
       *                           └───────┤  ---  ├───────┐   ┌───────┤  ---  ├───────┘
       *                                   └───────┤  Spc  │   │  Ent  ├───────┘
       *                                           └───────┘   └───────┘
@@ -154,7 +154,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX,   KC_F6,   KC_F4,  KC_F10,   KC_F2,   KC_F8,                              KC_F9,   KC_F3,   KC_F1,   KC_F5,   KC_F7, XXXXXXX,
         XXXXXXX,    KC_6,    KC_4,    KC_0,    KC_2,  KC_F12,                             KC_F11,    KC_3,    KC_1,    KC_5,    KC_7, XXXXXXX,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    KC_8, MO(_OTHER),                         XXXXXXX,    KC_9, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                                            KC_LGUI, _______,  KC_SPC,           KC_ENT, _______, XXXXXXX
+                                            XXXXXXX, _______,  KC_SPC,           KC_ENT, _______, XXXXXXX
     ),
      /* GAME
       * ┌───┬───┬───┬───┬───┬───┐       ┌───┬───┬───┬───┬───┬───┐
