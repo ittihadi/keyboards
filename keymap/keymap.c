@@ -48,12 +48,8 @@ enum layers {
 };
 
 enum combos {
-    UY_BACKSPACE,
-    ZD_TAB,
     GM_CAPSWORD,
-    COMBO_LENGTH,
 };
-uint16_t COMBO_LEN = COMBO_LENGTH;
 
 enum keycodes {
     OS_SHFT = SAFE_RANGE,
@@ -67,16 +63,12 @@ enum keycodes {
 #define LA_NAV MO(_NAV)
 #define LA_SYM MO(_SYM)
 
-const uint16_t PROGMEM uy_backspace[] = {KC_U, KC_Y, COMBO_END};
-const uint16_t PROGMEM zd_tab[] = {KC_Z, KC_D, COMBO_END};
 const uint16_t PROGMEM gm_capsword[] = {KC_G, KC_M, COMBO_END};
 
 // clang-format off
 // Apparently the keymap won't compile if this wasn't here after enabling
 // the combo feature
 combo_t key_combos[] = {
-    [UY_BACKSPACE] = COMBO(uy_backspace, KC_BSPC),
-    [ZD_TAB]       = COMBO(zd_tab, KC_TAB),
     [GM_CAPSWORD]  = COMBO(gm_capsword, CW_TOGG),
 };
 // clang-format on
