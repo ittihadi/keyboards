@@ -62,6 +62,7 @@ enum keycodes {
 
 #define LA_NAV MO(_NAV)
 #define LA_SYM MO(_SYM)
+#define CTL_TAB C(KC_TAB)
 
 const uint16_t PROGMEM gm_capsword[] = {KC_G, KC_M, COMBO_END};
 
@@ -97,11 +98,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
      /* 
       * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
-      * │       │  Tab  │       │       │       │       │       │       │       │       │       │  Del  │ R Alt │
+      * │       │  Tab  │       │       │ C-Tab │       │       │       │       │       │       │  Del  │ R Alt │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
       * │       │  GUI  │ OSAlt │ OSSft │ OSCtl │       │       │   ←   │   ↓   │   ↑   │   → 	│  Bsp  │ Pscrn │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
-      * │       │ Ctl Z │ Ctl X │ Ctl C │       │ Ctl V │       │ Home  │ PgDwn │  PgUp │  End  │       │  Esc  │
+      * │       │ Ctl Z │ Ctl X │ Ctl C │       │ Ctl V │       │ Home  │ PgDwn │  PgUp │  End  │  Esc  │       │
       * └───────┴───────┴───────┴───────┴───────┴───────┘       └───────┴───────┴───────┴───────┴───────┴───────┘
       *                           ┌───────┐                                   ┌───────┐
       *                           │       ├───────┐                   ┌───────┤  Bsp  │
@@ -110,9 +111,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       *                                           └───────┘   └───────┘
       */
     [_NAV] = LAYOUT_split_3x6_3(
-        XXXXXXX,  KC_TAB, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_DEL, KC_RALT,
+        XXXXXXX,  KC_TAB, XXXXXXX, XXXXXXX, CTL_TAB, XXXXXXX,                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_DEL, KC_RALT,
         XXXXXXX, KC_LGUI, OS_ALT,  OS_SHFT, OS_CTRL, XXXXXXX,                             KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,KC_BSPC, KC_PSCR,
-        XXXXXXX, C(KC_Z), C(KC_X), C(KC_C), XXXXXXX, C(KC_V),                             KC_HOME, KC_PGDN, KC_PGUP, KC_END,  XXXXXXX, KC_ESC,
+        XXXXXXX, C(KC_Z), C(KC_X), C(KC_C), XXXXXXX, C(KC_V),                             KC_HOME, KC_PGDN, KC_PGUP, KC_END,   KC_ESC, XXXXXXX,
                                             XXXXXXX, _______,  KC_SPC,           KC_ENT,  _______, KC_BSPC
     ),
      /*
