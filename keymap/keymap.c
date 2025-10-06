@@ -34,6 +34,7 @@
 // 2025-09-29 Make one shot mod cancels not cancel currently held one shot mod
 //            instead it marks it as consumed so it acts as if it was a normal
 //            modifier being held
+// 2025-10-06 Change punctuation layout to that of Gallium
 
 // TODO: Make the symbols and numbers not follow shift
 
@@ -78,11 +79,11 @@ combo_t key_combos[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      /*
       * ┌───┬───┬───┬───┬───┬───┐       ┌───┬───┬───┬───┬───┬───┐
-      * │Tab│ Q │ W │ F │ P │ B │       │ J │ L │ U │ Y │ ; │Alt│
+      * │Tab│ Q │ W │ F │ P │ B │       │ J │ L │ U │ Y │ , │Alt│
       * ├───┼───┼───┼───┼───┼───┤       ├───┼───┼───┼───┼───┼───┤
-      * │Ctl│ A │ R │ S │ T │ G │       │ M │ N │ E │ I │ O │ ' │
+      * │Ctl│ A │ R │ S │ T │ G │       │ M │ N │ E │ I │ O │ / │
       * ├───┼───┼───┼───┼───┼───┤       ├───┼───┼───┼───┼───┼───┤
-      * │Sft│ Z │ X │ C │ D │ V │       │ K │ H │ , │ . │ / │Esc│
+      * │Sft│ Z │ X │ C │ D │ V │       │ K │ H │ ' │ ; │ . │Esc│
       * └───┴───┴───┴───┴───┴───┘       └───┴───┴───┴───┴───┴───┘
       *               ┌───┐                   ┌───┐
       *               │GUI├───┐           ┌───┤Bsp│
@@ -91,9 +92,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       *                       └───┘   └───┘
       */
     [_COLEMAKDH] = LAYOUT_split_3x6_3(
-        KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_RALT,
-        KC_LCTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                                KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
-        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                                KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_ESC,
+        KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                KC_J,    KC_L,    KC_U,    KC_Y,    KC_COMM, KC_RALT,
+        KC_LCTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                                KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_SLSH,
+        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                                KC_K,    KC_H,    KC_QUOT, KC_SCLN, KC_DOT,  KC_ESC,
                                             KC_LGUI,  LA_NAV,  KC_SPC,           KC_ENT,  LA_SYM,  KC_BSPC
     ),
      /* 
