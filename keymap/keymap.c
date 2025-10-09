@@ -35,13 +35,14 @@
 //            instead it marks it as consumed so it acts as if it was a normal
 //            modifier being held
 // 2025-10-06 Change punctuation layout to that of Gallium
+// 2025-10-09 Move non-cancelling space to symbol layer so space is on the same
+//            location regardless and treat non-cancelling as if it was a mod
 
 // TODO: Make the symbols and numbers not follow shift
 
 enum layers {
     _COLEMAKDH = 0,
     _GAME,
-    _CAPSWORD,
     _NAV,
     _SYM,
     _FUN,
@@ -128,14 +129,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       *                           ┌───────┐                                   ┌───────┐
       *                           │       ├───────┐                   ┌───────┤       │
       *                           └───────┤  FUN  ├───────┐   ┌───────┤  ---  ├───────┘
-      *                                   └───────┤  Spc  │   │  Ent  ├───────┘
+      *                                   └───────┤ CWSpc │   │  Ent  ├───────┘
       *                                           └───────┘   └───────┘
       */
     [_SYM] = LAYOUT_split_3x6_3(
         KC_TAB,   KC_GRV, KC_LABK, KC_RABK, KC_MINS, KC_PIPE,                            KC_CIRC, KC_LCBR, KC_RCBR,  KC_DLR, KC_BSLS,  KC_DEL,
         KC_QUES, KC_EXLM, KC_ASTR, KC_SLSH,  KC_EQL, KC_AMPR,                            KC_HASH, OS_CTRL, OS_SHFT,  OS_ALT, KC_DQUO, KC_QUOT,
         KC_LSFT, KC_TILD, KC_PLUS, KC_LBRC, KC_RBRC, KC_PERC,                              KC_AT, KC_LPRN, KC_RPRN, KC_COLN, KC_UNDS,  KC_ESC,
-                                            XXXXXXX, _______,  KC_SPC,           KC_ENT, _______, XXXXXXX
+                                            XXXXXXX, _______, CW_NCSP,           KC_ENT, _______, XXXXXXX
     ),
      /*
       * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
@@ -197,26 +198,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         RM_NEXT, RM_HUED, RM_SATD, RM_VALD, XXXXXXX, _______,                            XXXXXXX, KC_BRID, KC_BRIU, KC_MRWD, XXXXXXX, XXXXXXX,
                                             XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX, XXXXXXX, XXXXXXX
     ),
-     /*
-      * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
-      * │  ---  │  ---  │  ---  │  ---  │  ---  │  ---  │       │  ---  │  ---  │  ---  │  ---  │  ---  │  ---  │
-      * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
-      * │  ---  │  ---  │  ---  │  ---  │  ---  │  ---  │       │  ---  │  ---  │  ---  │  ---  │  ---  │  ---  │
-      * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
-      * │  ---  │  ---  │  ---  │  ---  │  ---  │  ---  │       │  ---  │  ---  │  ---  │  ---  │  ---  │  ---  │
-      * └───────┴───────┴───────┴───────┴───────┴───────┘       └───────┴───────┴───────┴───────┴───────┴───────┘
-      *                           ┌───────┐                                   ┌───────┐
-      *                           │ CWSpc ├───────┐                   ┌───────┤  ---  │
-      *                           └───────┤  ---  ├───────┐   ┌───────┤  ---  ├───────┘
-      *                                   └───────┤ Space │   │  ---  ├───────┘
-      *                                           └───────┘   └───────┘
-      */
-    [_CAPSWORD] = LAYOUT_split_3x6_3(
-        _______, _______, _______, _______, _______, _______,                             _______, _______, _______, _______, _______, _______,
-        _______, _______, _______, _______, _______, _______,                             _______, _______, _______, _______, _______, _______,
-        _______, _______, _______, _______, _______, _______,                             _______, _______, _______, _______, _______, _______,
-                                            CW_NCSP, _______,  KC_SPC,          _______,  _______, _______
-    ),
 };
 // clang-format on
 
@@ -269,14 +250,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 layer_state_t layer_state_set_user(layer_state_t state) {
     return update_tri_layer_state(state, _NAV, _SYM, _FUN);
-}
-
-void caps_word_set_user(bool active) {
-    if (active) {
-        layer_on(_CAPSWORD);
-    } else {
-        layer_off(_CAPSWORD);
-    }
 }
 
 bool caps_word_press_user(uint16_t keycode) {
