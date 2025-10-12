@@ -37,6 +37,8 @@
 // 2025-10-06 Change punctuation layout to that of Gallium
 // 2025-10-09 Move non-cancelling space to symbol layer so space is on the same
 //            location regardless and treat non-cancelling as if it was a mod
+// 2025-10-12 Add .,_ on number layer, move tab one key to the right on nav,
+//            layer, remove tab and shift from outer column of symbol layer
 
 // TODO: Make the symbols and numbers not follow shift
 
@@ -100,7 +102,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
      /* 
       * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
-      * │       │  Tab  │       │       │ C-Tab │       │       │       │       │       │       │  Del  │       │
+      * │       │       │  Tab  │       │ C-Tab │       │       │       │       │       │       │  Del  │       │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
       * │       │  GUI  │ OSAlt │ OSSft │ OSCtl │       │       │   ←   │   ↓   │   ↑   │   → 	│  Bsp  │ Pscrn │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
@@ -113,18 +115,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       *                                           └───────┘   └───────┘
       */
     [_NAV] = LAYOUT_split_3x6_3(
-        XXXXXXX,  KC_TAB, XXXXXXX, XXXXXXX, CTL_TAB, XXXXXXX,                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_DEL, XXXXXXX,
+        XXXXXXX, XXXXXXX,  KC_TAB, XXXXXXX, CTL_TAB, XXXXXXX,                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_DEL, XXXXXXX,
         XXXXXXX, KC_LGUI, OS_ALT,  OS_SHFT, OS_CTRL, XXXXXXX,                             KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,KC_BSPC, KC_PSCR,
         XXXXXXX, C(KC_Z), C(KC_X), C(KC_C), XXXXXXX, C(KC_V),                             KC_HOME, KC_PGDN, KC_PGUP, KC_END,   KC_ESC, XXXXXXX,
                                             XXXXXXX, _______,  KC_SPC,           KC_ENT,  _______, XXXXXXX
     ),
      /*
       * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
-      * │  Tab  │   `   │   <   │   >   │   -   │   |   │       │   ^   │   {   │   }   │   $   │   \   │  Del  │
+      * │       │   `   │   <   │   >   │   -   │   |   │       │   ^   │   {   │   }   │   $   │   \   │  Del  │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
       * │   ?   │   !   │   *   │   /   │   =   │   &   │       │   #   │ OSCtl │ OSSft │ OSAlt │   "   │   '   │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
-      * │  Sft  │   ~   │   +   │   [   │   ]   │   %   │       │   @   │   (   │   )   │   :   │   _   │  Esc  │
+      * │       │   ~   │   +   │   [   │   ]   │   %   │       │   @   │   (   │   )   │   :   │   _   │  Esc  │
       * └───────┴───────┴───────┴───────┴───────┴───────┘       └───────┴───────┴───────┴───────┴───────┴───────┘
       *                           ┌───────┐                                   ┌───────┐
       *                           │       ├───────┐                   ┌───────┤       │
@@ -133,9 +135,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       *                                           └───────┘   └───────┘
       */
     [_SYM] = LAYOUT_split_3x6_3(
-        KC_TAB,   KC_GRV, KC_LABK, KC_RABK, KC_MINS, KC_PIPE,                            KC_CIRC, KC_LCBR, KC_RCBR,  KC_DLR, KC_BSLS,  KC_DEL,
+        XXXXXXX,  KC_GRV, KC_LABK, KC_RABK, KC_MINS, KC_PIPE,                            KC_CIRC, KC_LCBR, KC_RCBR,  KC_DLR, KC_BSLS,  KC_DEL,
         KC_QUES, KC_EXLM, KC_ASTR, KC_SLSH,  KC_EQL, KC_AMPR,                            KC_HASH, OS_CTRL, OS_SHFT,  OS_ALT, KC_DQUO, KC_QUOT,
-        KC_LSFT, KC_TILD, KC_PLUS, KC_LBRC, KC_RBRC, KC_PERC,                              KC_AT, KC_LPRN, KC_RPRN, KC_COLN, KC_UNDS,  KC_ESC,
+        XXXXXXX, KC_TILD, KC_PLUS, KC_LBRC, KC_RBRC, KC_PERC,                              KC_AT, KC_LPRN, KC_RPRN, KC_COLN, KC_UNDS,  KC_ESC,
                                             XXXXXXX, _______, CW_NCSP,           KC_ENT, _______, XXXXXXX
     ),
      /*
@@ -144,7 +146,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
       * │       │   6   │   4   │   0   │   2   │  F12  │       │  F11  │   3   │   1   │   5   │   7   │       │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
-      * │       │       │       │       │   8   │ Other │       │       │   9   │       │       │       │       │
+      * │       │       │       │       │   8   │ Other │       │       │   9   │   ,   │   .   │   _   │       │
       * └───────┴───────┴───────┴───────┴───────┴───────┘       └───────┴───────┴───────┴───────┴───────┴───────┘
       *                           ┌───────┐                                   ┌───────┐
       *                           │       ├───────┐                   ┌───────┤       │
@@ -155,7 +157,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_FUN] = LAYOUT_split_3x6_3(
         XXXXXXX,   KC_F6,   KC_F4,  KC_F10,   KC_F2,   KC_F8,                              KC_F9,   KC_F3,   KC_F1,   KC_F5,   KC_F7, XXXXXXX,
         XXXXXXX,    KC_6,    KC_4,    KC_0,    KC_2,  KC_F12,                             KC_F11,    KC_3,    KC_1,    KC_5,    KC_7, XXXXXXX,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    KC_8, MO(_OTHER),                         XXXXXXX,    KC_9, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    KC_8, MO(_OTHER),                         XXXXXXX,    KC_9, KC_COMM,  KC_DOT, KC_UNDS, XXXXXXX,
                                             XXXXXXX, _______,  KC_SPC,           KC_ENT, _______, XXXXXXX
     ),
      /* GAME
