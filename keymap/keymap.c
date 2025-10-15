@@ -39,6 +39,7 @@
 //            location regardless and treat non-cancelling as if it was a mod
 // 2025-10-12 Add .,_ on number layer, move tab one key to the right on nav,
 //            layer, remove tab and shift from outer column of symbol layer
+// 2025-10-15 Add NKRO toggle key
 
 // TODO: Make the symbols and numbers not follow shift
 
@@ -182,7 +183,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
      /*
       * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
-      * │ BOOT  │       │       │       │       │ GAMIN │       │       │       │       │       │       │       │
+      * │ BOOT  │ NKRO  │       │       │       │ GAMIN │       │       │       │       │       │       │       │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
       * │ Togg  │ HueUp │ SatUp │ ValUp │       │       │       │ VoMut │ VolDn │ VolUp │  Fwd  │       │       │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
@@ -195,7 +196,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       *                                           └───────┘   └───────┘
       */
     [_OTHER] = LAYOUT_split_3x6_3(
-        QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, TO(_GAME),                          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        QK_BOOT, NK_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, TO(_GAME),                          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         RM_TOGG, RM_HUEU, RM_SATU, RM_VALU, XXXXXXX, XXXXXXX,                            KC_MUTE, KC_VOLD, KC_VOLU, KC_MFFD, XXXXXXX, XXXXXXX,
         RM_NEXT, RM_HUED, RM_SATD, RM_VALD, XXXXXXX, _______,                            XXXXXXX, KC_BRID, KC_BRIU, KC_MRWD, XXXXXXX, XXXXXXX,
                                             XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX, XXXXXXX, XXXXXXX
