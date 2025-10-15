@@ -11,6 +11,8 @@ test*
 *.stp
 *.stl
 *.png
+*.jpeg
+*.jpg
 *.svg
 *.step
 *.FCStd
