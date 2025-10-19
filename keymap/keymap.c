@@ -41,6 +41,7 @@
 //            layer, remove tab and shift from outer column of symbol layer
 // 2025-10-15 Add NKRO toggle key
 // 2025-10-16 Replace symbol layer alt with question mark key
+// 2025-10-16 Add gallium layout to try out
 
 // TODO: Make the symbols and numbers not follow shift
 // TODO: Mouse layer, toggled with left/right inner (closest under palm) thumb
@@ -48,6 +49,7 @@
 
 enum layers {
     _COLEMAKDH = 0,
+    _GALLIUM,
     _GAME,
     _NAV,
     _SYM,
@@ -78,6 +80,8 @@ enum keycodes {
 #else
 #define LA_MOUS XXXXXXX
 #endif
+#define DF_COL DF(_COLEMAKDH)
+#define DF_GAL DF(_GALLIUM)
 #define CTL_TAB C(KC_TAB)
 
 const uint16_t PROGMEM gm_capsword[] = {KC_G, KC_M, COMBO_END};
@@ -110,6 +114,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                KC_J,    KC_L,    KC_U,    KC_Y,    KC_COMM, KC_RALT,
         KC_LCTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                                KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_SLSH,
         KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                                KC_K,    KC_H,    KC_QUOT, KC_SCLN, KC_DOT,  KC_ESC,
+                                            LA_MOUS,  LA_NAV,  KC_SPC,           KC_ENT,  LA_SYM,  KC_BSPC
+    ),
+     /*
+      * ┌───┬───┬───┬───┬───┬───┐       ┌───┬───┬───┬───┬───┬───┐
+      * │   │ B │ L │ D │ C │ V │       │ J │ Y │ O │ U │ , │   │
+      * ├───┼───┼───┼───┼───┼───┤       ├───┼───┼───┼───┼───┼───┤
+      * │Ctl│ N │ R │ T │ S │ G │       │ P │ H │ A │ E │ I │   │
+      * ├───┼───┼───┼───┼───┼───┤       ├───┼───┼───┼───┼───┼───┤
+      * │Sft│ X │ Q │ M │ W │ Z │       │ K │ F │ ' │ ; │ . │Esc│
+      * └───┴───┴───┴───┴───┴───┘       └───┴───┴───┴───┴───┴───┘
+      *               ┌───┐                   ┌───┐
+      *               │MOU├───┐           ┌───┤Bsp│
+      *               └───┤NAV├───┐   ┌───┤SYM├───┘
+      *                   └───┤Spc│   │Ent├───┘
+      *                       └───┘   └───┘
+      */
+    [_GALLIUM] = LAYOUT_split_3x6_3(
+        XXXXXXX, KC_B,    KC_L,    KC_D,    KC_C,    KC_V,                                KC_J,    KC_Y,    KC_O,    KC_U,    KC_COMM, XXXXXXX,
+        KC_LCTL, KC_N,    KC_R,    KC_T,    KC_S,    KC_G,                                KC_P,    KC_H,    KC_A,    KC_E,    KC_I,    XXXXXXX,
+        KC_LSFT, KC_X,    KC_Q,    KC_M,    KC_W,    KC_Z,                                KC_K,    KC_F,    KC_QUOT, KC_SCLN, KC_DOT,  KC_ESC,
                                             LA_MOUS,  LA_NAV,  KC_SPC,           KC_ENT,  LA_SYM,  KC_BSPC
     ),
      /* 
@@ -194,7 +218,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
      /*
       * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
-      * │ BOOT  │ NKRO  │       │       │       │ GAMIN │       │       │       │       │       │       │       │
+      * │ BOOT  │ NKRO  │       │       │       │ GAMIN │       │       │ COLEM │ GALLI │       │       │       │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
       * │ Togg  │ HueUp │ SatUp │ ValUp │       │       │       │ VoMut │ VolDn │ VolUp │  Fwd  │       │       │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
@@ -207,7 +231,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       *                                           └───────┘   └───────┘
       */
     [_OTHER] = LAYOUT_split_3x6_3(
-        QK_BOOT, NK_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, TO(_GAME),                          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        QK_BOOT, NK_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, TO(_GAME),                          XXXXXXX,  DF_COL,  DF_GAL, XXXXXXX, XXXXXXX, XXXXXXX,
         RM_TOGG, RM_HUEU, RM_SATU, RM_VALU, XXXXXXX, XXXXXXX,                            KC_MUTE, KC_VOLD, KC_VOLU, KC_MFFD, XXXXXXX, XXXXXXX,
         RM_NEXT, RM_HUED, RM_SATD, RM_VALD, XXXXXXX, _______,                            XXXXXXX, KC_BRID, KC_BRIU, KC_MRWD, XXXXXXX, XXXXXXX,
                                             XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX, XXXXXXX, XXXXXXX
