@@ -40,6 +40,7 @@
 // 2025-10-12 Add .,_ on number layer, move tab one key to the right on nav,
 //            layer, remove tab and shift from outer column of symbol layer
 // 2025-10-15 Add NKRO toggle key
+// 2025-10-16 Replace symbol layer alt with question mark key
 
 // TODO: Make the symbols and numbers not follow shift
 
@@ -125,7 +126,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
       * │       │   `   │   <   │   >   │   -   │   |   │       │   ^   │   {   │   }   │   $   │   \   │  Del  │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
-      * │   ?   │   !   │   *   │   /   │   =   │   &   │       │   #   │ OSCtl │ OSSft │ OSAlt │   "   │   '   │
+      * │       │   !   │   *   │   /   │   =   │   &   │       │   #   │ OSCtl │ OSSft │   ?   │   "   │   '   │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
       * │       │   ~   │   +   │   [   │   ]   │   %   │       │   @   │   (   │   )   │   :   │   _   │  Esc  │
       * └───────┴───────┴───────┴───────┴───────┴───────┘       └───────┴───────┴───────┴───────┴───────┴───────┘
@@ -137,7 +138,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       */
     [_SYM] = LAYOUT_split_3x6_3(
         XXXXXXX,  KC_GRV, KC_LABK, KC_RABK, KC_MINS, KC_PIPE,                            KC_CIRC, KC_LCBR, KC_RCBR,  KC_DLR, KC_BSLS,  KC_DEL,
-        KC_QUES, KC_EXLM, KC_ASTR, KC_SLSH,  KC_EQL, KC_AMPR,                            KC_HASH, OS_CTRL, OS_SHFT,  OS_ALT, KC_DQUO, KC_QUOT,
+        XXXXXXX, KC_EXLM, KC_ASTR, KC_SLSH,  KC_EQL, KC_AMPR,                            KC_HASH, OS_CTRL, OS_SHFT, KC_QUES, KC_DQUO, KC_QUOT,
         XXXXXXX, KC_TILD, KC_PLUS, KC_LBRC, KC_RBRC, KC_PERC,                              KC_AT, KC_LPRN, KC_RPRN, KC_COLN, KC_UNDS,  KC_ESC,
                                             XXXXXXX, _______, CW_NCSP,           KC_ENT, _______, XXXXXXX
     ),
