@@ -43,6 +43,8 @@
 // 2025-10-16 Replace symbol layer alt with question mark key
 
 // TODO: Make the symbols and numbers not follow shift
+// TODO: Mouse layer, toggled with left/right inner (closest under palm) thumb
+//       key
 
 enum layers {
     _COLEMAKDH = 0,
@@ -51,6 +53,9 @@ enum layers {
     _SYM,
     _FUN,
     _OTHER,
+#ifdef MOUSEKEY_ENABLE
+    _MOUSE,
+#endif
 };
 
 enum combos {
@@ -68,6 +73,11 @@ enum keycodes {
 
 #define LA_NAV MO(_NAV)
 #define LA_SYM MO(_SYM)
+#ifdef MOUSEKEY_ENABLE
+#define LA_MOUS MO(_MOUSE)
+#else
+#define LA_MOUS XXXXXXX
+#endif
 #define CTL_TAB C(KC_TAB)
 
 const uint16_t PROGMEM gm_capsword[] = {KC_G, KC_M, COMBO_END};
@@ -91,7 +101,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       * │Sft│ Z │ X │ C │ D │ V │       │ K │ H │ ' │ ; │ . │Esc│
       * └───┴───┴───┴───┴───┴───┘       └───┴───┴───┴───┴───┴───┘
       *               ┌───┐                   ┌───┐
-      *               │GUI├───┐           ┌───┤Bsp│
+      *               │MOU├───┐           ┌───┤Bsp│
       *               └───┤NAV├───┐   ┌───┤SYM├───┘
       *                   └───┤Spc│   │Ent├───┘
       *                       └───┘   └───┘
@@ -100,7 +110,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                KC_J,    KC_L,    KC_U,    KC_Y,    KC_COMM, KC_RALT,
         KC_LCTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                                KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_SLSH,
         KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                                KC_K,    KC_H,    KC_QUOT, KC_SCLN, KC_DOT,  KC_ESC,
-                                            KC_LGUI,  LA_NAV,  KC_SPC,           KC_ENT,  LA_SYM,  KC_BSPC
+                                            LA_MOUS,  LA_NAV,  KC_SPC,           KC_ENT,  LA_SYM,  KC_BSPC
     ),
      /* 
       * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
@@ -202,6 +212,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         RM_NEXT, RM_HUED, RM_SATD, RM_VALD, XXXXXXX, _______,                            XXXXXXX, KC_BRID, KC_BRIU, KC_MRWD, XXXXXXX, XXXXXXX,
                                             XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX, XXXXXXX, XXXXXXX
     ),
+#ifdef MOUSEKEY_ENABLE
+     /*
+      * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
+      * │       │       │       │       │       │       │       │       │       │       │       │       │       │
+      * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
+      * │       │       │       │       │       │       │       │       │       │       │       │       │       │
+      * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
+      * │       │       │       │       │       │       │       │       │       │       │       │       │       │
+      * └───────┴───────┴───────┴───────┴───────┴───────┘       └───────┴───────┴───────┴───────┴───────┴───────┘
+      *                           ┌───────┐                                   ┌───────┐
+      *                           │  ---  ├───────┐                   ┌───────┤       │
+      *                           └───────┤       ├───────┐   ┌───────┤       ├───────┘
+      *                                   └───────┤  Spc  │   │  Ent  ├───────┘
+      *                                           └───────┘   └───────┘
+      */
+    [_MOUSE] = LAYOUT_split_3x6_3(
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+                                        _______, XXXXXXX,  KC_SPC,           KC_ENT, XXXXXXX, XXXXXXX
+    ),
+#endif
 };
 // clang-format on
 
