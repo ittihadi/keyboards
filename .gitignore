@@ -3,6 +3,7 @@ dxiv/
 dxiv_pcb/
 blender/
 cq-venv/
+references/
 .cache/
 
 # Unused design files
