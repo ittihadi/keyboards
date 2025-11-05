@@ -44,14 +44,18 @@
 // 2025-10-16 Add gallium layout to try out
 // 2025-10-19 Add Ctrl-Backspace key to nav layer and move printscreen to a
 //            less easy to misclick location
+// 2025-10-21 Add combo for CAPSWORD on Gallium on the same position as Colemak
+// 2025-10-22 Move ctrl-V to qwerty position to account for gallium changing V
+//            location again
+// 2025-10-23 Set gallium as the default layout
 
 // TODO: Make the symbols and numbers not follow shift
 // TODO: Mouse layer, toggled with left/right inner (closest under palm) thumb
 //       key
 
 enum layers {
-    _COLEMAKDH = 0,
-    _GALLIUM,
+    _GALLIUM = 0,
+    _COLEMAKDH,
     _GAME,
     _NAV,
     _SYM,
@@ -64,6 +68,7 @@ enum layers {
 
 enum combos {
     GM_CAPSWORD,
+    GP_CAPSWORD,
 };
 
 enum keycodes {
@@ -88,12 +93,14 @@ enum keycodes {
 #define DEL_WORD C(KC_BSPC)
 
 const uint16_t PROGMEM gm_capsword[] = {KC_G, KC_M, COMBO_END};
+const uint16_t PROGMEM gp_capsword[] = {KC_G, KC_P, COMBO_END};
 
 // clang-format off
 // Apparently the keymap won't compile if this wasn't here after enabling
 // the combo feature
 combo_t key_combos[] = {
     [GM_CAPSWORD]  = COMBO(gm_capsword, CW_TOGG),
+    [GP_CAPSWORD]  = COMBO(gp_capsword, CW_TOGG),
 };
 // clang-format on
 
@@ -145,7 +152,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
       * │       │  GUI  │ OSAlt │ OSSft │ OSCtl │       │       │   ←   │   ↓   │   ↑   │   → 	│  Bsp  │       │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
-      * │       │ Ctl Z │ Ctl X │ Ctl C │       │ Ctl V │       │ Home  │ PgDwn │  PgUp │  End  │  Esc  │       │
+      * │       │ Ctl Z │ Ctl X │ Ctl C │ Ctl V │       │       │ Home  │ PgDwn │  PgUp │  End  │  Esc  │       │
       * └───────┴───────┴───────┴───────┴───────┴───────┘       └───────┴───────┴───────┴───────┴───────┴───────┘
       *                           ┌───────┐                                   ┌───────┐
       *                           │       ├───────┐                   ┌───────┤       │
@@ -156,7 +163,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_NAV] = LAYOUT_split_3x6_3(
         XXXXXXX, XXXXXXX,  KC_TAB, XXXXXXX, CTL_TAB, XXXXXXX,                             KC_PSCR, XXXXXXX, XXXXXXX, DEL_WORD, KC_DEL, XXXXXXX,
         XXXXXXX, KC_LGUI, OS_ALT,  OS_SHFT, OS_CTRL, XXXXXXX,                             KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,KC_BSPC, XXXXXXX,
-        XXXXXXX, C(KC_Z), C(KC_X), C(KC_C), XXXXXXX, C(KC_V),                             KC_HOME, KC_PGDN, KC_PGUP, KC_END,   KC_ESC, XXXXXXX,
+        XXXXXXX, C(KC_Z), C(KC_X), C(KC_C), C(KC_V), XXXXXXX,                             KC_HOME, KC_PGDN, KC_PGUP, KC_END,   KC_ESC, XXXXXXX,
                                             XXXXXXX, _______,  KC_SPC,           KC_ENT,  _______, XXXXXXX
     ),
      /*
