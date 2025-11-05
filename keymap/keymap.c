@@ -48,10 +48,9 @@
 // 2025-10-22 Move ctrl-V to qwerty position to account for gallium changing V
 //            location again
 // 2025-10-23 Set gallium as the default layout
+// 2025-11-04 Add mouse layer
 
 // TODO: Make the symbols and numbers not follow shift
-// TODO: Mouse layer, toggled with left/right inner (closest under palm) thumb
-//       key
 
 enum layers {
     _GALLIUM = 0,
@@ -83,7 +82,7 @@ enum keycodes {
 #define LA_NAV MO(_NAV)
 #define LA_SYM MO(_SYM)
 #ifdef MOUSEKEY_ENABLE
-#define LA_MOUS MO(_MOUSE)
+#define LA_MOUS TG(_MOUSE)
 #else
 #define LA_MOUS XXXXXXX
 #endif
@@ -249,11 +248,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #ifdef MOUSEKEY_ENABLE
      /*
       * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
-      * │       │       │       │       │       │       │       │       │       │       │       │       │       │
+      * │       │       │       │ ScrUp │       │       │       │       │       │       │       │       │       │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
-      * │       │       │       │       │       │       │       │       │       │       │       │       │       │
+      * │       │       │  RMB  │  MMB  │  LMB  │       │       │ Mo Le │ Mo Dn │ Mo Up │ Mo Ri │       │       │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
-      * │       │       │       │       │       │       │       │       │       │       │       │       │       │
+      * │       │       │       │ ScrDn │       │       │       │       │ Acc 0 │ Acc 1 │ Acc 2 │       │       │
       * └───────┴───────┴───────┴───────┴───────┴───────┘       └───────┴───────┴───────┴───────┴───────┴───────┘
       *                           ┌───────┐                                   ┌───────┐
       *                           │  ---  ├───────┐                   ┌───────┤       │
@@ -262,9 +261,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       *                                           └───────┘   └───────┘
       */
     [_MOUSE] = LAYOUT_split_3x6_3(
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, MS_WHLU, XXXXXXX, XXXXXXX,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, MS_BTN2, MS_BTN3, MS_BTN1, XXXXXXX,                            MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, MS_WHLD, XXXXXXX, XXXXXXX,                            XXXXXXX, MS_ACL0, MS_ACL1, MS_ACL2, XXXXXXX, XXXXXXX,
                                         _______, XXXXXXX,  KC_SPC,           KC_ENT, XXXXXXX, XXXXXXX
     ),
 #endif
