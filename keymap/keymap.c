@@ -49,8 +49,15 @@
 //            location again
 // 2025-10-23 Set gallium as the default layout
 // 2025-11-04 Add mouse layer
+// 2026-01-10 All non-bound key on mouse layer now switches it off
+// 2026-01-10 Add scroll left/right to mouse layer
+// 2026-01-10 Fix gaming toggle reverting to COLEMAK instead of GALLIUM
+// 2026-01-10 Add tab key to base layer gallium
 
 // TODO: Make the symbols and numbers not follow shift
+// TODO: Disable whatever keys were pressed when switching to mouse mode
+// TODO: Add sym/nav layer toggles to mouse layer and have them also disable
+//       mouse mode when pressed
 
 enum layers {
     _GALLIUM = 0,
@@ -127,7 +134,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
      /*
       * ┌───┬───┬───┬───┬───┬───┐       ┌───┬───┬───┬───┬───┬───┐
-      * │   │ B │ L │ D │ C │ V │       │ J │ Y │ O │ U │ , │   │
+      * │Tab│ B │ L │ D │ C │ V │       │ J │ Y │ O │ U │ , │   │
       * ├───┼───┼───┼───┼───┼───┤       ├───┼───┼───┼───┼───┼───┤
       * │Ctl│ N │ R │ T │ S │ G │       │ P │ H │ A │ E │ I │   │
       * ├───┼───┼───┼───┼───┼───┤       ├───┼───┼───┼───┼───┼───┤
@@ -140,7 +147,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       *                       └───┘   └───┘
       */
     [_GALLIUM] = LAYOUT_split_3x6_3(
-        XXXXXXX, KC_B,    KC_L,    KC_D,    KC_C,    KC_V,                                KC_J,    KC_Y,    KC_O,    KC_U,    KC_COMM, XXXXXXX,
+        KC_TAB,  KC_B,    KC_L,    KC_D,    KC_C,    KC_V,                                KC_J,    KC_Y,    KC_O,    KC_U,    KC_COMM, XXXXXXX,
         KC_LCTL, KC_N,    KC_R,    KC_T,    KC_S,    KC_G,                                KC_P,    KC_H,    KC_A,    KC_E,    KC_I,    XXXXXXX,
         KC_LSFT, KC_X,    KC_Q,    KC_M,    KC_W,    KC_Z,                                KC_K,    KC_F,    KC_QUOT, KC_SCLN, KC_DOT,  KC_ESC,
                                             LA_MOUS,  LA_NAV,  KC_SPC,           KC_ENT,  LA_SYM,  KC_BSPC
@@ -220,10 +227,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       *                       └───┘   └───┘
       */
     [_GAME] = LAYOUT_split_3x6_3(
-        KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                                KC_Y,           KC_U,    KC_I,    KC_O,    KC_P,    KC_RALT,
-        KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                KC_H,           KC_J,    KC_K,    KC_L,    KC_UP,   KC_ESC,
-        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                KC_N,           KC_M,    XXXXXXX, KC_LEFT, KC_DOWN, KC_RIGHT,
-                                            KC_LGUI, XXXXXXX,  KC_SPC,           KC_ENT,  TO(_COLEMAKDH) ,KC_BSPC
+        KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                                KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_RALT,
+        KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                KC_H,    KC_J,    KC_K,    KC_L,    KC_UP,   KC_ESC,
+        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                KC_N,    KC_M,    XXXXXXX, KC_LEFT, KC_DOWN, KC_RIGHT,
+                                            KC_LGUI, XXXXXXX,  KC_SPC,           KC_ENT,  TO(0),   KC_BSPC
     ),
      /*
       * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
@@ -248,11 +255,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #ifdef MOUSEKEY_ENABLE
      /*
       * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
-      * │       │       │       │ ScrUp │       │       │       │       │       │       │       │       │       │
+      * │  ***  │  ***  │  ***  │ ScrUp │  ***  │  ***  │       │  ***  │  ***  │  ***  │  ***  │  ***  │  ***  │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
-      * │       │       │  RMB  │  MMB  │  LMB  │       │       │ Mo Le │ Mo Dn │ Mo Up │ Mo Ri │       │       │
+      * │  ***  │ ScrLf │  RMB  │  MMB  │  LMB  │ ScrRg │       │ Mo Le │ Mo Dn │ Mo Up │ Mo Ri │  ***  │  ***  │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
-      * │       │       │       │ ScrDn │       │       │       │       │ Acc 0 │ Acc 1 │ Acc 2 │       │       │
+      * │  ***  │  ***  │  ***  │ ScrDn │  ***  │  ***  │       │  ***  │ Acc 0 │ Acc 1 │ Acc 2 │  ***  │  ***  │
       * └───────┴───────┴───────┴───────┴───────┴───────┘       └───────┴───────┴───────┴───────┴───────┴───────┘
       *                           ┌───────┐                                   ┌───────┐
       *                           │  ---  ├───────┐                   ┌───────┤       │
@@ -261,9 +268,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       *                                           └───────┘   └───────┘
       */
     [_MOUSE] = LAYOUT_split_3x6_3(
-        XXXXXXX, XXXXXXX, XXXXXXX, MS_WHLU, XXXXXXX, XXXXXXX,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, XXXXXXX, MS_BTN2, MS_BTN3, MS_BTN1, XXXXXXX,                            MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT, XXXXXXX, XXXXXXX,
-        XXXXXXX, XXXXXXX, XXXXXXX, MS_WHLD, XXXXXXX, XXXXXXX,                            XXXXXXX, MS_ACL0, MS_ACL1, MS_ACL2, XXXXXXX, XXXXXXX,
+        LA_MOUS, LA_MOUS, LA_MOUS, MS_WHLU, LA_MOUS, LA_MOUS,                            LA_MOUS, LA_MOUS, LA_MOUS, LA_MOUS, LA_MOUS, LA_MOUS,
+        LA_MOUS, MS_WHLL, MS_BTN2, MS_BTN3, MS_BTN1, MS_WHLR,                            MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT, LA_MOUS, LA_MOUS,
+        LA_MOUS, LA_MOUS, LA_MOUS, MS_WHLD, LA_MOUS, LA_MOUS,                            LA_MOUS, MS_ACL0, MS_ACL1, MS_ACL2, LA_MOUS, LA_MOUS,
                                         _______, XXXXXXX,  KC_SPC,           KC_ENT, XXXXXXX, XXXXXXX
     ),
 #endif
