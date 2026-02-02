@@ -53,11 +53,12 @@
 // 2026-01-10 Add scroll left/right to mouse layer
 // 2026-01-10 Fix gaming toggle reverting to COLEMAK instead of GALLIUM
 // 2026-01-10 Add tab key to base layer gallium
+// 2026-02-02 Add sym/nav layer toggles to mouse layer and have them also
+// disable
+//            mouse mode when pressed
+// 2026-02-02 Disable whatever keys were pressed when switching to mouse mode
 
 // TODO: Make the symbols and numbers not follow shift
-// TODO: Disable whatever keys were pressed when switching to mouse mode
-// TODO: Add sym/nav layer toggles to mouse layer and have them also disable
-//       mouse mode when pressed
 
 enum layers {
     _GALLIUM = 0,
@@ -271,7 +272,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         LA_MOUS, LA_MOUS, LA_MOUS, MS_WHLU, LA_MOUS, LA_MOUS,                            LA_MOUS, LA_MOUS, LA_MOUS, LA_MOUS, LA_MOUS, LA_MOUS,
         LA_MOUS, MS_WHLL, MS_BTN2, MS_BTN3, MS_BTN1, MS_WHLR,                            MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT, LA_MOUS, LA_MOUS,
         LA_MOUS, LA_MOUS, LA_MOUS, MS_WHLD, LA_MOUS, LA_MOUS,                            LA_MOUS, MS_ACL0, MS_ACL1, MS_ACL2, LA_MOUS, LA_MOUS,
-                                        _______, XXXXXXX,  KC_SPC,           KC_ENT, XXXXXXX, XXXXXXX
+                                            _______, LA_NAV,  KC_SPC,            KC_ENT, LA_SYM,  XXXXXXX
     ),
 #endif
 };
@@ -317,6 +318,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case CW_NCSP:
         if (record->event.pressed) {
             send_char(' ');
+        }
+        break;
+    case LA_MOUS:
+        // Clear all keys pressed when switching to mouse layer
+        clear_keyboard_but_mods();
+        break;
+    case LA_NAV:
+    case LA_SYM:
+        // Turn off mouse layer before doing normal action
+        if (IS_LAYER_ON(_MOUSE)) {
+            layer_off(_MOUSE);
         }
         break;
     }
