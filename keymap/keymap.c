@@ -5,58 +5,11 @@
 
 #include "oneshot.h"
 
-// Based on Corne default
-// 2025-09-10 Callum style mods
-// 2025-09-14 Modified the symbol layers from
-//  https://getreuer.info/posts/keyboards/symbol-layer/index.html
-//   getreuer
-//   seniply
-// Rearrange layers and moved extra functions to "OTHER" layer for cleaner
-// function layer
-// 2025-09-17 Add CAPSWORD toggle button to function layer
-// 2025-09-18 Rearrange number row and function row similar to
-//  https://www.jonashietala.se/blog/2021/06/03/the-t-34-keyboard-layout/
-//  and https://github.com/callum-oakley/qmk_firmware/tree/master/users/callum
-// 2025-09-27 Swap Backspace and Right Alt keys
-// 2025-09-27 Add ctrl and alt to function layer
-// 2025-09-27 Move F11 and F12 to inner index finger
-// 2025-09-27 Add Ctrl Z X C V to nav layer
-// 2025-09-29 Change OSM super key on numnav layer to normal super key and
-//            remove super key from thumb cluster (at least on base layer)
-// 2025-09-29 Remove default QWERTY layer, gaming layer will suffice in typing
-//            QWERTY
-// 2025-09-29 Add combos for tab and backspace on base layer, exact
-//            configuration is being considered
-// 2025-09-29 Move numbers to the same layer as functions, add combo for
-//            capsword trigger, move tab on nav layer closer in by a column,
-//            add backspace and delete into symbol layer, and cleaned up some
-//            unused keys
-// 2025-09-29 Make one shot mod cancels not cancel currently held one shot mod
-//            instead it marks it as consumed so it acts as if it was a normal
-//            modifier being held
-// 2025-10-06 Change punctuation layout to that of Gallium
-// 2025-10-09 Move non-cancelling space to symbol layer so space is on the same
-//            location regardless and treat non-cancelling as if it was a mod
-// 2025-10-12 Add .,_ on number layer, move tab one key to the right on nav,
-//            layer, remove tab and shift from outer column of symbol layer
-// 2025-10-15 Add NKRO toggle key
-// 2025-10-16 Replace symbol layer alt with question mark key
-// 2025-10-16 Add gallium layout to try out
-// 2025-10-19 Add Ctrl-Backspace key to nav layer and move printscreen to a
-//            less easy to misclick location
-// 2025-10-21 Add combo for CAPSWORD on Gallium on the same position as Colemak
-// 2025-10-22 Move ctrl-V to qwerty position to account for gallium changing V
-//            location again
-// 2025-10-23 Set gallium as the default layout
-// 2025-11-04 Add mouse layer
-// 2026-01-10 All non-bound key on mouse layer now switches it off
-// 2026-01-10 Add scroll left/right to mouse layer
-// 2026-01-10 Fix gaming toggle reverting to COLEMAK instead of GALLIUM
-// 2026-01-10 Add tab key to base layer gallium
-// 2026-02-02 Add sym/nav layer toggles to mouse layer and have them also
-// disable
-//            mouse mode when pressed
-// 2026-02-02 Disable whatever keys were pressed when switching to mouse mode
+// Based on
+// Corne default keymap
+// getreuer symbol keymap
+// Jonas Hietala numbers
+// Callum style home row mods
 
 // TODO: Make the symbols and numbers not follow shift
 
