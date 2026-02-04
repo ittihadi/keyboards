@@ -1,6 +1,12 @@
 // Copyright 2023 QMK
 // SPDX-License-Identifier: GPL-2.0-or-later
 
+#ifndef bool
+#define bool int
+#define true 1
+#define false 0
+#endif
+
 #include QMK_KEYBOARD_H
 
 #include "oneshot.h"
