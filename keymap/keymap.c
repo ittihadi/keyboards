@@ -219,7 +219,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
       * │  ***  │ ScrLf │  RMB  │  MMB  │  LMB  │ ScrRg │       │ Mo Le │ Mo Dn │ Mo Up │ Mo Ri │  ***  │  ***  │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
-      * │  ***  │  ***  │  ***  │ ScrDn │  ***  │  ***  │       │  ***  │ Acc 0 │ Acc 1 │ Acc 2 │  ***  │  ***  │
+      * │  ***  │  ***  │  ***  │ ScrDn │  ***  │  ***  │       │  ***  │  Ctl  │  Shf  │  Alt  │  ***  │  ***  │
       * └───────┴───────┴───────┴───────┴───────┴───────┘       └───────┴───────┴───────┴───────┴───────┴───────┘
       *                           ┌───────┐                                   ┌───────┐
       *                           │  ---  ├───────┐                   ┌───────┤       │
@@ -228,9 +228,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       *                                           └───────┘   └───────┘
       */
     [_MOUSE] = LAYOUT_split_3x6_3(
-        LA_MOUS, LA_MOUS, LA_MOUS, MS_WHLU, LA_MOUS, LA_MOUS,                            LA_MOUS, LA_MOUS, LA_MOUS, LA_MOUS, LA_MOUS, LA_MOUS,
-        LA_MOUS, MS_WHLL, MS_BTN2, MS_BTN3, MS_BTN1, MS_WHLR,                            MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT, LA_MOUS, LA_MOUS,
-        LA_MOUS, LA_MOUS, LA_MOUS, MS_WHLD, LA_MOUS, LA_MOUS,                            LA_MOUS, MS_ACL0, MS_ACL1, MS_ACL2, LA_MOUS, LA_MOUS,
+        _______, _______, _______, MS_WHLU, _______, _______,                            _______, _______, _______, _______, _______, _______,
+        _______, MS_WHLL, MS_BTN2, MS_BTN3, MS_BTN1, MS_WHLR,                            MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT, _______, _______,
+        _______, _______, _______, MS_WHLD, _______, _______,                            _______, KC_LCTL, KC_LSFT, KC_LALT, _______, _______,
                                             _______, LA_NAV,  KC_SPC,            KC_ENT, LA_SYM,  XXXXXXX
     ),
 #endif
@@ -279,17 +279,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             send_char(' ');
         }
         break;
+#ifdef MOUSEKEY_ENABLE
     case LA_MOUS:
         // Clear all keys pressed when switching to mouse layer
         clear_keyboard_but_mods();
         break;
     case LA_NAV:
     case LA_SYM:
+    case KC_TRNS:
         // Turn off mouse layer before doing normal action
         if (IS_LAYER_ON(_MOUSE)) {
             layer_off(_MOUSE);
         }
         break;
+#endif
     }
 
     return true;
