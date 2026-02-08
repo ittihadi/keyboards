@@ -49,4 +49,4 @@ function layer
 2026-02-02 Add sym/nav layer toggles to mouse layer and have them also disable
            mouse mode when pressed
 2026-02-02 Disable whatever keys were pressed when switching to mouse mode
-
+2026-02-08 Add Ctrl-Y to the nav layer for easier autocomplete confirmation

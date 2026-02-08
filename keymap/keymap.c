@@ -114,7 +114,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
      /* 
       * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
-      * │       │       │  Tab  │       │ C-Tab │       │       │ Pscrn │       │       │ C-Bsp │  Del  │       │
+      * │       │       │  Tab  │       │ C-Tab │       │       │ Pscrn │ Ctl Y │       │ C-Bsp │  Del  │       │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
       * │       │  GUI  │ OSAlt │ OSSft │ OSCtl │       │       │   ←   │   ↓   │   ↑   │   → 	│  Bsp  │       │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
@@ -127,7 +127,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       *                                           └───────┘   └───────┘
       */
     [_NAV] = LAYOUT_split_3x6_3(
-        XXXXXXX, XXXXXXX,  KC_TAB, XXXXXXX, CTL_TAB, XXXXXXX,                             KC_PSCR, XXXXXXX, XXXXXXX, DEL_WORD, KC_DEL, XXXXXXX,
+        XXXXXXX, XXXXXXX,  KC_TAB, XXXXXXX, CTL_TAB, XXXXXXX,                             KC_PSCR, C(KC_Y), XXXXXXX, DEL_WORD, KC_DEL, XXXXXXX,
         XXXXXXX, KC_LGUI, OS_ALT,  OS_SHFT, OS_CTRL, XXXXXXX,                             KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,KC_BSPC, XXXXXXX,
         XXXXXXX, C(KC_Z), C(KC_X), C(KC_C), C(KC_V), XXXXXXX,                             KC_HOME, KC_PGDN, KC_PGUP, KC_END,   KC_ESC, XXXXXXX,
                                             XXXXXXX, _______,  KC_SPC,           KC_ENT,  _______, XXXXXXX
