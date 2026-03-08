@@ -1,7 +1,8 @@
 ---
-layout: base.njk
 published: 2025-09-30
 updated: 2025-10-01
+title: Short
+icon: lucide/circle-gauge
 ---
 
 # Building a Handwired Keyboard (Short Version)
@@ -12,9 +13,11 @@ This project began around the beginning of 2025 when I started getting
 recommendations of "ergonomic keymaps" and became interested in them. It
 started with simple things like HHKB's control key in the place of caps lock,
 or me swapping my alt and windows keys around for easier navigation with my
-window manager. Eventually I discovered the [ZSA
-Voyager](https://www.zsa.io/voyager) and wanted to try something sleek like it,
-but since I couldn't buy it, I looked for alternatives.
+window manager. Eventually I discovered the [ZSA Voyager][zsa] and wanted to
+try something sleek like it, but since I couldn't buy it, I looked for
+alternatives.
+
+  [zsa]: https://www.zsa.io/voyager
 
 A bit of browsing later and I landed on the Crkbd's form factor. At first I
 wanted to just print its supplied PCB files but after failing to find an
@@ -36,19 +39,27 @@ time I tried a CAD suite, the app was running like a slideshow.
 I found that both FreeCAD and OpenSCAD ran pretty well on my machine, with
 OpenSCAD being more stable, so I went with that option. First I designed the
 switch plate, which helps align the switches to where they're supposed to be.
-For the sizing I followed both this [Keyboard Anatomy
-Guide](https://matt3o.com/anatomy-of-a-keyboard/) and [Crkbd's footprint
-image](https://github.com/foostan/crkbd), slightly deviating only in making the
-plate 1.45mm thick instead of the full 1.5mm, in case the print ended up being
-oversized instead of undersized.
+For the sizing I followed both this [Keyboard Anatomy Guide][kbd-anatomy] and
+[Crkbd's footprint image][crkbd-footprint], slightly deviating only in making
+the plate 1.45mm thick instead of the full 1.5mm, in case the print ended up
+being oversized instead of undersized.
 
-![CAD preview of the switch mount plates]({{ "/images/cad_switch_plate.webp" | url }} "Switch mount plate design")
+  [kbd-anatomy]: https://matt3o.com/anatomy-of-a-keyboard/
+  [crkbd-footprint]: https://github.com/foostan/crkbd
+
+![CAD preview of the switch mount plates](../images/cad_switch_plate.webp){ height="512px" loading=lazy }
+/// caption
+Switch mount plate design
+///
 
 I ordered the print through a listing on Shopee and after a week or so I
 received it, bent... but it wasn't the end of the world since this plate could
 be flattened quite a bit and putting in the switches should also force it flat.
 
-![Switch mount plate printed out]({{ "/images/print_result_switch_plate.webp" | url }} "Switch mount plate prints, a *bit* bent")
+![Switch mount plate printed out](../images/print_result_switch_plate.webp){ height="512px" loading=lazy }
+/// caption
+Switch mount plate prints, a *bit* bent
+///
 
 After seeing how well the plate went it was time for the PCB substitute, the
 case, and the cover. The PCB substitute was identical in shape to the switch
@@ -57,28 +68,41 @@ to go through. I considered whether or not I should even support 5 pin switches
 but since it was better to play safe I did.
 
 The measurements for the holes were taken from the specification sheet of the
-[BOX White]() switches,
-the [Kailh Switch Sockets](),
-and the [WS2812B LED]()
-I bought. Since I wanted to have slots for my sockets, LEDs, and wires, I added
-those too.
+[BOX White][box-white-spec] switches, the [Kailh Switch Sockets][kailh-socket],
+and the [WS2812B LED][ws2812b-led] I bought. Since I wanted to have slots for
+my sockets, LEDs, and wires, I added those too.
+
+  [box-white-spec]: ""
+  [kailh-socket]: ""
+  [ws2812b-led]: ""
 
 Here's what I ended up with
 
-![CAD preview of the wiring plate]({{ "/images/cad_pcb.webp" | url }} "Wiring plate design")
+![CAD preview of the wiring plate](../images/cad_pcb.webp){ height="512px" loading=lazy }
+/// caption
+Wiring plate design
+///
 
 I also included holes for pin header legs both for the USB-C interconnect as
 well as the RP2040-Zero MCU.
 
 
-When I was designing the case I stumbled upon the [BOSL2 library](),
+When I was designing the case I stumbled upon the [BOSL2 library][bosl2],
 which could give me easier rounding in OpenSCAD itself. Utilizing that library I
 designed both the case and the MCU cover and had significantly easier time making
 it round
 
-![CAD preview of the case]({{ "/images/cad_case.webp" | url }} "Case design")
+  [bosl2]: ""
 
-![CAD preview of the cover]({{ "/images/cad_cover.webp" | url }} "MCU cover design")
+![CAD preview of the case](../images/cad_case.webp){ height="512px" loading=lazy }
+/// caption
+Case design
+///
+
+![CAD preview of the cover](../images/cad_cover.webp){ height="512px" loading=lazy }
+/// caption
+MCU cover design
+///
 
 Since most Crkbd builds use an acrylic plate or OLED screen to cover up the MCU I
 had to make some creative liberties in designing a full cover that wouldn't leave
@@ -90,7 +114,10 @@ time.
 
 Thankfully they arrived safely
 
-![Case, wiring plate, and MCU cover prints]({{ "/images/print_result_full.webp" | url }} "The print results looking good")
+![Case, wiring plate, and MCU cover prints](../images/print_result_full.webp){ height="512px" loading=lazy }
+/// caption
+The print results looking good
+///
 
 ## Assembly
 
@@ -122,7 +149,10 @@ assembly. The heat-set inserts weren't that difficult to install, though I
 could've bought ones more specialized for 3D prints, as these ones were a little
 hard to align properly.
 
-![Heat-set inserts]({{ "/images/heat_set_inserts.webp" | url }} "Installing the heat-set inserts")
+![Heat-set inserts](../images/heat_set_inserts.webp){ height="512px" loading=lazy }
+/// caption
+Installing the heat-set inserts
+///
 
 After a test fit I wanted to install the interconnects first, since those also
 didn't have active components and... they were too far from the hole. Turns out,
@@ -131,7 +161,10 @@ deep and I couldn't actually insert the USB plug correctly, so I had to *move*
 the holes closer. This, along with moving the MCU's header holes closer, as
 that was also too far in, was annoying, but again, I didn't want to reprint.
 
-![Shifted interconnect pin holes]({{ "/images/moved_interconnect_slots.webp" | url }} "Moved interconnect pin holes")
+![Shifted interconnect pin holes](../images/moved_interconnect_slots.webp){ height="512px" loading=lazy }
+/// caption
+Moved interconnect pin holes
+///
 
 [//]: # (> Insert moved MCU header holes image)
 
@@ -148,7 +181,10 @@ if the parts fit and... they don't, again, because the holes were too small. So
 I had to shave off some material to get them to fit. After that then I finally
 start installing, first up the interconnects.
 
-![Glued in intercoonnect plug]({{ "/images/glued_interconnect.webp" | url }} "The interconnect plug attached with glue")
+![Glued in intercoonnect plug](../images/glued_interconnect.webp){ height="512px" loading=lazy }
+/// caption
+The interconnect plug attached with glue
+///
 
 [//]: # (Editing note: Interconnects were only glued in to place by this point
 but not actually wired the wiring was done after the components were glued as
@@ -162,12 +198,18 @@ close to it was hot.
 Next up I installed the rubber feet, of course, the holes were also slightly
 undersized.
 
-![Attaching the rubber feet]({{ "/images/rubber_feet.webp" | url }} "Installing the rubber feet")
+![Attaching the rubber feet](../images/rubber_feet.webp){ height="512px" loading=lazy }
+/// caption
+Installing the rubber feet
+///
 
 Since I was going for hot glue, I first hot glued the LEDs and sockets in. This
 was a bit messy, but in my mind it was fine.
 
-![Left half glued components]({{ "/images/left_glued_back.webp" | url }} "The LEDs and sockets glued into place")
+![Left half glued components](../images/left_glued_back.webp){ height="512px" loading=lazy }
+/// caption
+The LEDs and sockets glued into place
+///
 
 Then there's the handedness resistor, which is used by the firmware to decide
 which half of the keymap it uses. At first I used the 5V pin from the MCU, but
@@ -185,9 +227,15 @@ it's the better one to do before doing the switches. And this ends up working
 pretty nicely, though not without quite a few connection errors from bad joints
 both for data and power.
 
-![Left half LED wiring]({{ "/images/left_first_led_back.webp" | url }} "Wiring for the LEDs")
+![Left half LED wiring](../images/left_first_led_back.webp){ height="512px" loading=lazy }
+/// caption
+Wiring for the LEDs
+///
 
-![Left half LED test]({{ "/images/left_first_led.webp" | url }} "Testing the LEDs")
+![Left half LED test](../images/left_first_led.webp){ height="512px" loading=lazy }
+/// caption
+Testing the LEDs
+///
 
 So now that that's working, I move on to the switches, starting from the
 diodes, and then the wires. I test it... and it runs!
@@ -232,7 +280,10 @@ middle instead of making many short wire segments, it was also less fragile.
 This time around the wires were also sanded beforehand, because I saw a slight
 increase in ease of soldering and wanted to play it safe.
 
-![Right half first layer]({{ "/images/first_layer_right.webp" | url }} "The \"first layer\" of the right half")
+![Right half first layer](../images/first_layer_right.webp){ height="512px" loading=lazy }
+/// caption
+The "first layer" of the right half
+///
 
 Now I didn't use hot glue for this half, since I didn't want to deal with the
 mess it made, and because this side held all the parts in by friction good
@@ -247,9 +298,15 @@ issue, it worked perfectly! The input was consistent, the LEDs didn't flicker,
 and it fits in the case fine! After this glorious success I decided to take a
 little break to work on a game dev competition submission for a bit.
 
-![Right half second layer]({{ "/images/full_layer_right.webp" | url }} "The \"second layer\" of the right half")
+![Right half second layer](../images/full_layer_right.webp){ height="512px" loading=lazy }
+/// caption
+The "second layer" of the right half
+///
 
-![Right half assembled]({{ "/images/finished_right_assembled.webp" | url }} "The right side finished and assembled")
+![Right half assembled](../images/finished_right_assembled.webp){ height="512px" loading=lazy }
+/// caption
+The right side finished and assembled
+///
 
 After a small break I got back to working on the project by desoldering the
 entire left half that I've done before, because I didn't like the quality of it
@@ -264,7 +321,10 @@ semester was starting soon and I wanted this done before then.
 In the end I finished all the soldering on the last day of vacation, and now
 that I had both halves it was time to test it out.
 
-![Left half reworked]({{ "/images/full_layer_left.webp" | url }} "Reworked left half")
+![Left half reworked](../images/full_layer_left.webp){ height="512px" loading=lazy }
+/// caption
+Reworked left half
+///
 
 Moment of truth, I connect both halves and, it works! Though the left half is a
 bit dodgy, and the LEDs sometimes flicker, but it works in general. After
@@ -275,8 +335,11 @@ losing contact randomly.
 The interconnect cable also can't be unplugged easily yet since if I wanted to
 plug it back in I'd have to hold the board with my hand to stop it from sliding.
 
-![Complete pair]({{ "/images/full_complete.webp" | url }} "Both sides completed")
+![Complete pair](../images/full_complete.webp)
 {.popout}
+/// caption
+Both sides completed
+///
 
 
 ## A Strive for Ergonomics
@@ -287,7 +350,10 @@ switching but I thought I might as well so that I can make a whole new
 mapping in my brain for typing on this split keyboard instead of having to
 modify my muscle memory for QWERTY.
 
-![Colemak-DH layout on an ortholinear]({{ "/images/colemak_dh_main_matrix.webp" | url }} "Colemak-DH layout")
+![Colemak-DH layout on an ortholinear](../images/colemak_dh_main_matrix.webp){ height="512px" loading=lazy }
+/// caption
+Colemak-DH layout
+///
 
 At first it was veeeery slow, but I could see the appeal almost immediately, as
 I could see that I didn't need to move my fingers nearly as much to type the
@@ -309,7 +375,10 @@ toothpick with super glue to hold the pin headers in place, this seems to work
 reasonably well and allowed me to plug in the interconnect without the port
 sliding back.
 
-![Toothpick hack to stop the USB plug from sliding back]({{ "/images/toothpick_hack.webp" | url }} "Using a toothpick to stop sliding")
+![Toothpick hack to stop the USB plug from sliding back](../images/toothpick_hack.webp){ height="512px" loading=lazy }
+/// caption
+Using a toothpick to stop sliding
+///
 
 The other issue I had was that the left half of the board was disconnecting
 randomly. Thinking back to when I was attaching the MCU to this side I remember
@@ -328,9 +397,10 @@ tapping it.
 
 I've known of this method for a while but I didn't want to use it since I
 personally don't want to have timing based inputs. Luckily while browsing for
-alternative keymaps I discovered a
-[post]() that mentioned "Callum Style Mods",
-named after the person who popularized it.
+alternative keymaps I discovered a [post][callum-mods] that mentioned "Callum
+Style Mods", named after the person who popularized it.
+
+  [callum-mods]: ""
 
 I decided to implement this first and after a few days of getting used to, it
 actually felt nice to use, and the fact that the keys were one shot meant that
@@ -339,26 +409,39 @@ I could let go of the keys and still get a shifted input for my next key.
 This change also basically removed the need for the normal modifier keys in
 common typing scenarios.
 
-![Callum mods on nav layer]({{ "/images/callum_mods_1.webp" | url }} "")
+![Callum mods on nav layer](../images/callum_mods_1.webp){ height="512px" loading=lazy }
 
-![Callum mods on sym layer]({{ "/images/callum_mods_2.webp" | url }} "Callum mods on number and symbol layers")
+![Callum mods on sym layer](../images/callum_mods_2.webp){ height="512px" loading=lazy }
+/// caption
+Callum mods on number and symbol layers
+///
 
 After seeing how nice Callum mods were and implementing it on both sides of my
 keyboard I needed to change up my symbol layer as well, since it was now
-conflicting with the right hand modifiers. Following a
-[post]()
+conflicting with the right hand modifiers. Following a [post][getreuer-sym]
 about symbol layers by Getreuer, I decided to adapt their symbol layer and
 slightly tweak it to accomodate my modifier placement.
 
-![Symbol layer]({{ "/images/symbol_layer.webp" | url }} "Symbol layer inspired by getreuer")
+  [getreuer-sym]: ""
+
+![Symbol layer](../images/symbol_layer.webp){ height="512px" loading=lazy }
+/// caption
+Symbol layer inspired by getreuer
+///
 
 Finally, I wanted to modify my number row, especially after seeing
-[Jonas Hietala's](https://www.jonashietala.se/blog/2021/06/03/the-t-34-keyboard-layout/)
-keymap, though I did find a [reddit post]()
-about optimizing the number row, I opted for the easier to learn layout and
-adapted the alternating number row to the top row instead of the home row.
+[Jonas Hietala's][jonas-hietela-t34] keymap, though I did find a
+[reddit post][num-row-opt] about optimizing the number row, I opted for the
+easier to learn layout and adapted the alternating number row to the top row
+instead of the home row.
 
-![Number row]({{ "/images/number_row.webp" | url }} "Alternating number row on num/nav layer")
+  [jonas-hietela-t34]: https://www.jonashietala.se/blog/2021/06/03/the-t-34-keyboard-layout/
+  [num-row-opt]: ""
+
+![Number row](../images/number_row.webp){ height="512px" loading=lazy }
+/// caption
+Alternating number row on num/nav layer
+///
 
 ```Some time later```
 
@@ -367,7 +450,10 @@ into the function layer and have both in the same place. This is also after
 realizing that by doing this I can alternate between numbers and symbols much
 easier by just pressing/letting go of the nav layer key.
 
-![Numbers moved to function layer]({{ "/images/number_function.webp" | url }} "Alternating numbers on home row along with functions")
+![Numbers moved to function layer](../images/number_function.webp){ height="512px" loading=lazy }
+/// caption
+Alternating numbers on home row along with functions
+///
 
 ## Conclusion
 
@@ -390,4 +476,3 @@ after writing this I'm finding new ways to add more nice bits in order to
 minimize hand movement while maximizing comfort and speed. Things like combos
 and even more layers that I find from other people's keymaps give me things I
 can try.
-

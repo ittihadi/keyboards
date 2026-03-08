@@ -1,10 +1,8 @@
 ---
-layout: base.njk
+title: Handwired Split Keyboard
 ---
 
 # Making a Handwired Split Keyboard
-
----
 
 Hello! I just finished making myself a handwired split keyboard and I'd like to
 tell you my journey in doing so
@@ -12,34 +10,16 @@ tell you my journey in doing so
 This write-up will have two versions: A longer story like version and a shorter 
 rundown version
 
-## The Long Version
-`WIP`
+- **[The long version](long)**
+- **[The short version](short)**
 
-<!-- - [0 - Background]({{ "/long/0/" | url}}) -->
-<!-- - [1 - Design Considerations]({{ "/long/1/" | url }}) -->
-<!-- - [2 - Initial Design Phase]({{ "/long/2/" | url }}) -->
-<!-- - [3 - Designing the Rest]({{ "/long/3/" | url }}) -->
-<!-- - [4 - Newfound Obstacle]({{ "/long/4/" | url }}) -->
-<!-- - [5 - Assembly]({{ "/long/5/" | url }}) -->
-<!-- - [6 - Finishing Touches]({{ "/long/6/" | url }}) \ -->
-<!-- `Post build` -->
-<!-- - [7 - The Keymap and Firmware]({{ "/long/7/" | url }}) -->
-<!-- - [8 - Summary]({{ "/long/8/" | url }}) -->
+## The Final Result
 
-## The Short Version
-- [Short and simple]({{ "/short/" | url }})
+![Completed pair](/images/full_complete.webp){ height="512" loading=lazy }
 
-## The Final Product
-
-![Complete pair]({{ "/images/full_complete.webp" | url }}){.shadow}
-{.popout}
-
-![Thumbnail shot]({{ "/images/thumbnail_image_small.webp" | url }}){.shadow}
-{.popout}
+![Thumbnail shot](/images/thumbnail_image_small.webp){ height="512" loading=lazy }
 
 ## Cost Breakdown
-
-<div class="table-container">
 
 | Part Name                   | Price/Piece (IDR) | Qty | Total Raw | Shipping & Other | Discount | Effective Total |
 | :-------------------------- | ----------------: | --: | --------: | ---------------: | -------: | --------------: |
@@ -60,14 +40,6 @@ rundown version
 | Rubber Feet 8x2mm           |              300  |   8 |    2'400  |               -  |       -  |          2'400  |
 | Silent Switch               |            1'596  |  42 |   63'822  |                  |          |                 |
 | Keycap Set                  |                   |   1 |           |                  |          |                 |
-| Total {colspan=3}                                     |  402'568  |                  |          |                 |
+| Total {colspan=3}                                     |  **402'568**  |                  |          |                 |
 
-{.solid-table}
-</div>
-
-[//]: # (`Add footer element`)
-
-<!--
-vim: nowrap
--->
 

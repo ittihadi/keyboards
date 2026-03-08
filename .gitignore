@@ -23,8 +23,11 @@ polyround*
 
 # Blog items
 node_modules/
-blog/public/images/raw/
-blog/_site
+blog_11ty/public/images/raw/
+blog/images/raw/
+blog_11ty/_site
+blog/site
+blog_11ty/
 
 compile_commands.json
 
