@@ -15,9 +15,9 @@ rundown version
 
 ## The Final Result
 
-![Completed pair](/images/full_complete.webp){ height="512" loading=lazy }
+![Completed pair](../images/full_complete.webp){ height="512" loading=lazy }
 
-![Thumbnail shot](/images/thumbnail_image_small.webp){ height="512" loading=lazy }
+![Thumbnail shot](../images/thumbnail_image_small.webp){ height="512" loading=lazy }
 
 ## Cost Breakdown
 
