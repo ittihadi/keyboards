@@ -53,3 +53,8 @@ function layer
 2026-02-08 Change never used mouse key acceleration profiles for modifiers
 2026-02-08 Change mouse layer unused keys to transparent that also disables the
            layer
+2026-04-11 Try out having mouse layer where space is on nav layer and add
+	   CW Space to left-index-right on symbol layer
+2026-04-11 Add ctr+shift+tab to nav layer so stopping midway from switching to
+           previous tab doesn't leave a dangling osm shift pressed down and
+	   make the next switch to next tab actually switch to the previous one
