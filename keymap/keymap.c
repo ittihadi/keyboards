@@ -21,7 +21,6 @@
 
 enum layers {
     _GALLIUM = 0,
-    _COLEMAKDH,
     _GAME,
     _NAV,
     _SYM,
@@ -53,8 +52,6 @@ enum keycodes {
 #else
 #define LA_MOUS XXXXXXX
 #endif
-#define DF_COL DF(_COLEMAKDH)
-#define DF_GAL DF(_GALLIUM)
 #define CTL_TAB C(KC_TAB)
 #define CSH_TAB C(S(KC_TAB))
 #define DEL_WORD C(KC_BSPC)
@@ -73,26 +70,6 @@ combo_t key_combos[] = {
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-     /*
-      * ┌───┬───┬───┬───┬───┬───┐       ┌───┬───┬───┬───┬───┬───┐
-      * │Tab│ Q │ W │ F │ P │ B │       │ J │ L │ U │ Y │ , │Alt│
-      * ├───┼───┼───┼───┼───┼───┤       ├───┼───┼───┼───┼───┼───┤
-      * │Ctl│ A │ R │ S │ T │ G │       │ M │ N │ E │ I │ O │ / │
-      * ├───┼───┼───┼───┼───┼───┤       ├───┼───┼───┼───┼───┼───┤
-      * │Sft│ Z │ X │ C │ D │ V │       │ K │ H │ ' │ ; │ . │Esc│
-      * └───┴───┴───┴───┴───┴───┘       └───┴───┴───┴───┴───┴───┘
-      *               ┌───┐                   ┌───┐
-      *               │MOU├───┐           ┌───┤Bsp│
-      *               └───┤NAV├───┐   ┌───┤SYM├───┘
-      *                   └───┤Spc│   │Ent├───┘
-      *                       └───┘   └───┘
-      */
-    [_COLEMAKDH] = LAYOUT_split_3x6_3(
-        KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                KC_J,    KC_L,    KC_U,    KC_Y,    KC_COMM, KC_RALT,
-        KC_LCTL, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                                KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_SLSH,
-        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                                KC_K,    KC_H,    KC_QUOT, KC_SCLN, KC_DOT,  KC_ESC,
-                                            LA_MOUS,  LA_NAV,  KC_SPC,           KC_ENT,  LA_SYM,  KC_BSPC
-    ),
      /*
       * ┌───┬───┬───┬───┬───┬───┐       ┌───┬───┬───┬───┬───┬───┐
       * │Tab│ B │ L │ D │ C │ V │       │ J │ Y │ O │ U │ , │   │
@@ -195,7 +172,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
      /*
       * ┌───────┬───────┬───────┬───────┬───────┬───────┐       ┌───────┬───────┬───────┬───────┬───────┬───────┐
-      * │ BOOT  │ NKRO  │       │       │       │ GAMIN │       │       │ COLEM │ GALLI │       │       │       │
+      * │ BOOT  │ NKRO  │       │       │       │ GAMIN │       │       │       │       │       │       │       │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
       * │ Togg  │ HueUp │ SatUp │ ValUp │       │       │       │ VoMut │ VolDn │ VolUp │  Fwd  │       │       │
       * ├───────┼───────┼───────┼───────┼───────┼───────┤       ├───────┼───────┼───────┼───────┼───────┼───────┤
@@ -208,7 +185,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       *                                           └───────┘   └───────┘
       */
     [_OTHER] = LAYOUT_split_3x6_3(
-        QK_BOOT, NK_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, TO(_GAME),                          XXXXXXX,  DF_COL,  DF_GAL, XXXXXXX, XXXXXXX, XXXXXXX,
+        QK_BOOT, NK_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, TO(_GAME),                          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         RM_TOGG, RM_HUEU, RM_SATU, RM_VALU, XXXXXXX, XXXXXXX,                            KC_MUTE, KC_VOLD, KC_VOLU, KC_MFFD, XXXXXXX, XXXXXXX,
         RM_NEXT, RM_HUED, RM_SATD, RM_VALD, XXXXXXX, _______,                            XXXXXXX, KC_BRID, KC_BRIU, KC_MRWD, XXXXXXX, XXXXXXX,
                                             XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX, XXXXXXX, XXXXXXX

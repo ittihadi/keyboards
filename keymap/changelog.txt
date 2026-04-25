@@ -58,3 +58,5 @@ function layer
 2026-04-11 Add ctr+shift+tab to nav layer so stopping midway from switching to
            previous tab doesn't leave a dangling osm shift pressed down and
 	   make the next switch to next tab actually switch to the previous one
+2026-04-25 Remove Colemak-DH layer, I don't use it anymore and no longer
+           remember the layout
