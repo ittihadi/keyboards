@@ -60,3 +60,4 @@ function layer
 	   make the next switch to next tab actually switch to the previous one
 2026-04-25 Remove Colemak-DH layer, I don't use it anymore and no longer
            remember the layout
+2026-04-25 Move other layer RGB keys one column to the right
